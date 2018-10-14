@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SetupPage" />
-        <activity android:name=".Begin"></activity>
+        <activity android:name=".Begin" />
+        <activity android:name=".DBAdapter"></activity>
     </application>
 
 </manifest>
