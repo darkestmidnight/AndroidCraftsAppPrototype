@@ -20,6 +20,8 @@ public class Begin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_begin);
 
+        dbHelper = new DBAdapter(this);
+
         BeginHomeBtn = (ImageButton) findViewById(R.id.BeginHomeBtn);
         BeginHomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,7 +30,9 @@ public class Begin extends AppCompatActivity {
             }
         });
 
-
+        OutputTxt = (TextView) findViewById(R.id.BeginOutputTxt);
+        String data = dbHelper.getData();
+        OutputTxt.setText(data);
 
         BeginDoneBtn = (Button) findViewById(R.id.BeginDoneBtn);
         BeginDoneBtn.setOnClickListener(new View.OnClickListener() {
@@ -39,8 +43,8 @@ public class Begin extends AppCompatActivity {
         });
     }
 
-    public void viewItems(View view){
+    /*public void viewItems(View view){
         String data = dbHelper.getData();
-       // OutputTxt.setText()
-    }
+        OutputTxt.setText(data);
+    }*/
 }

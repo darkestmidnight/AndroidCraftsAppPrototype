@@ -29,7 +29,7 @@ public class SetupPage extends AppCompatActivity {
     ListView ListView1;
     protected Button SetupAcceptBtn;
     protected CharSequence[] receivers = {
-            "Nature", "Popsicle Sticks", "Glue", "Paper", "Pencil", "Oil Pastels", "Paint",
+            "Nature", "Popsicle_Sticks", "Glue", "Paper", "Pencil", "Oil_Pastels", "Paint",
                 "Charcoal", "Clay", "Sunset", "Ocean"};
     //protected ArrayList<CharSequence> SelectedOptions = new ArrayList<>();
 
@@ -37,6 +37,8 @@ public class SetupPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         dbHelper = new DBAdapter(this);
+        dbHelper.deleteDatabase(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_page);
 

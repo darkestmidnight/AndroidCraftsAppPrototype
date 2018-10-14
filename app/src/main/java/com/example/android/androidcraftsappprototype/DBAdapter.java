@@ -17,6 +17,10 @@ public class DBAdapter{
         dbHelper = new DBHelper(context);
     }
 
+    public void deleteDatabase(Context context){
+        context.deleteDatabase("CraftsAppDatabase");
+    }
+
     public long insertData(String chosenItem){
         SQLiteDatabase dbItem = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -29,13 +33,13 @@ public class DBAdapter{
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String[] columns = {DBHelper.UID,DBHelper.NAME};
-        Cursor cursor =db.query(DBHelper.TABLE_NAME,columns,null,null,null,null,null);
-        StringBuilder buffer= new StringBuilder();
+        Cursor cursor = db.query(DBHelper.TABLE_NAME,columns,null,null,null,null,null);
+        StringBuilder buffer = new StringBuilder();
         while (cursor.moveToNext())
         {
             int cursorID = cursor.getInt(cursor.getColumnIndex(DBHelper.UID));
             String chosenItem = cursor.getString(cursor.getColumnIndex(DBHelper.NAME));
-            buffer.append(cursorID+ "   " + chosenItem + "   " +" \n");
+            buffer.append(chosenItem + "   " + "\n");
         }
         return buffer.toString();
     }
@@ -45,7 +49,7 @@ public class DBAdapter{
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String[] whereArgs ={deleteItem};
 
-        int count =db.delete(DBHelper.TABLE_NAME ,DBHelper.NAME+" = ?",whereArgs);
+        int count = db.delete(DBHelper.TABLE_NAME ,DBHelper.NAME+" = ?",whereArgs);
         return  count;
     }
 
@@ -65,6 +69,11 @@ public class DBAdapter{
             super(context, DATABASE_NAME, null, DATABASE_Version);
             this.context=context;
         }
+
+        /*public void deleteTable(SQLiteDatabase db) {
+            db = getWritableDatabase();
+            db.execSQL("DROP TABLE IF EXISTS CraftTools");
+        }*/
 
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(CREATE_TABLE);
