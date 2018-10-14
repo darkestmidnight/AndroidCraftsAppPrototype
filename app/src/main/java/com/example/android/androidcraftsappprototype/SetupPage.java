@@ -26,9 +26,9 @@ public class SetupPage extends AppCompatActivity {
 
     // variables for multiple selection
     ArrayAdapter<CharSequence> adapter;
-    ListView ListView1;
+    ListView ChoicesList;
     protected Button SetupAcceptBtn;
-    protected CharSequence[] receivers = {
+    protected CharSequence[] Choices = {
             "Nature", "Popsicle_Sticks", "Glue", "Paper", "Pencil", "Oil_Pastels", "Paint",
                 "Charcoal", "Clay", "Sunset", "Ocean"};
     //protected ArrayList<CharSequence> SelectedOptions = new ArrayList<>();
@@ -37,12 +37,14 @@ public class SetupPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         dbHelper = new DBAdapter(this);
+
+        // Deletes the database for new selection
         dbHelper.deleteDatabase(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_page);
 
-        // to go back one page
+        // to go back to Home page
         SetupHomeBtn = (ImageButton) findViewById(R.id.SetupHomeBtn);
         SetupHomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,29 +53,32 @@ public class SetupPage extends AppCompatActivity {
             }
         });
 
-        // to process the whole selection of categories for the app thing
-        ListView1 = (ListView) findViewById(R.id.SetupListView);
-        // string[] of my array
+        // To process the whole selection of categories for the app
+        ChoicesList = (ListView) findViewById(R.id.SetupListView);
+        // String[] of my array
         adapter = new ArrayAdapter<CharSequence>(this,
-                android.R.layout.simple_list_item_multiple_choice, receivers);
+                android.R.layout.simple_list_item_multiple_choice, Choices);
 
         // To save items selected
-        ListView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        ListView1.setAdapter(adapter);
+        ChoicesList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        ChoicesList.setAdapter(adapter);
 
+        // To go to the Begin page and store selected items in SQLite
         SetupAcceptBtn = (Button) findViewById(R.id.SetupAcceptBtn);
         SetupAcceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
 
             public void onClick(View v) {
-                int countSelected = ListView1.getCount();
+                int countSelected = ChoicesList.getCount();
                 String[] selectedItems = new String[countSelected];
-                SparseBooleanArray checkedItems = ListView1.getCheckedItemPositions();
+                SparseBooleanArray checkedItems = ChoicesList.getCheckedItemPositions();
 
                 // Inserting chosen items to SQLite
                 for (int i = 0; i < countSelected; i++){
+
+                    // Every item are inserted to the Database
                     if(checkedItems.valueAt(i)){
-                        selectedItems[i] = ListView1.getAdapter().getItem(checkedItems.keyAt(i)).toString();
+                        selectedItems[i] = ChoicesList.getAdapter().getItem(checkedItems.keyAt(i)).toString();
                         dbHelper.insertData(selectedItems[i]);
                     }
                 }

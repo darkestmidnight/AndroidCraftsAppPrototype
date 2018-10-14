@@ -22,6 +22,7 @@ public class Begin extends AppCompatActivity {
 
         dbHelper = new DBAdapter(this);
 
+        // To go back to the Home page
         BeginHomeBtn = (ImageButton) findViewById(R.id.BeginHomeBtn);
         BeginHomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,10 +31,12 @@ public class Begin extends AppCompatActivity {
             }
         });
 
+        // To set the text of the page according to the DB table content
         OutputTxt = (TextView) findViewById(R.id.BeginOutputTxt);
         String data = dbHelper.getData();
         OutputTxt.setText(data);
 
+        // To go back to Home page when done
         BeginDoneBtn = (Button) findViewById(R.id.BeginDoneBtn);
         BeginDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         //TextView tv = (TextView) findViewById(R.id.sample_text);
         //tv.setText(stringFromJNI());
 
+        // Button to go to google.com
         AboutBtn = (ImageButton) findViewById(R.id.HomePurposeBtn);
         AboutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Button to go to the next page
         HomeBeginBtn = (Button) findViewById(R.id.HomeBeginBtn);
         HomeBeginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
+    /*
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */

@@ -17,10 +17,12 @@ public class DBAdapter{
         dbHelper = new DBHelper(context);
     }
 
+    // To delete the Database
     public void deleteDatabase(Context context){
         context.deleteDatabase("CraftsAppDatabase");
     }
 
+    // To insert data to DB
     public long insertData(String chosenItem){
         SQLiteDatabase dbItem = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -29,12 +31,15 @@ public class DBAdapter{
         return id;
     }
 
+    // To get data from DB
     public String getData()
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String[] columns = {DBHelper.UID,DBHelper.NAME};
         Cursor cursor = db.query(DBHelper.TABLE_NAME,columns,null,null,null,null,null);
         StringBuilder buffer = new StringBuilder();
+
+        // Append every data together
         while (cursor.moveToNext())
         {
             int cursorID = cursor.getInt(cursor.getColumnIndex(DBHelper.UID));
@@ -44,6 +49,7 @@ public class DBAdapter{
         return buffer.toString();
     }
 
+    // To delete data in table
     public  int deleteData(String deleteItem)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
