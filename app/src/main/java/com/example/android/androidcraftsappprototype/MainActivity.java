@@ -13,9 +13,9 @@ import android.net.Uri;
 public class MainActivity extends AppCompatActivity {
 
     // Used to load the 'native-lib' library on application startup.
-    static {
+    /*static {
         System.loadLibrary("native-lib");
-    }
+    }*/
 
     ImageButton AboutBtn, HomeSettingsBtn;
     String url = "http://www.google.com";
@@ -40,13 +40,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*HomeBeginBtn = (Button) findViewById(R.id.HomeBeginBtn);
+        HomeBeginBtn = (Button) findViewById(R.id.HomeBeginBtn);
         HomeBeginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SetupPage.class));
             }
-        });*/
+        });
         /*HomeSettingsBtn = (ImageButton) findViewById(R.id.HomeSettingsBtn);
         HomeSettingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override

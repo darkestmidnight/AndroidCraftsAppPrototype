@@ -27,7 +27,7 @@ public class SetupPage extends AppCompatActivity {
     protected Button SetupAcceptBtn;
     protected CharSequence[] receivers = {
             "Receiver1", "Receiver2", "Receivers3"};
-    protected ArrayList<CharSequence> SelectedOptions = new ArrayList<>();
+    //protected ArrayList<CharSequence> SelectedOptions = new ArrayList<>();
 
 
     @Override
@@ -35,7 +35,7 @@ public class SetupPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_page);
 
-        // to go to the next page
+        // to go back one page
         SetupHomeBtn = (ImageButton) findViewById(R.id.SetupHomeBtn);
         SetupHomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,30 +46,38 @@ public class SetupPage extends AppCompatActivity {
 
         // to process the whole selection of categories for the app thing
         ListView1 = (ListView) findViewById(R.id.SetupListView);
-        SetupAcceptBtn = (Button) findViewById(R.id.SetupAcceptBtn);
-        SetupAcceptBtn.setOnClickListener((View.OnClickListener) this);
-
         // string[] of my array
         adapter = new ArrayAdapter<CharSequence>(this,
-                android.R.layout.simple_list_item_multiple_choice, SelectedOptions);
+                android.R.layout.simple_list_item_multiple_choice, receivers);
 
         ListView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         ListView1.setAdapter(adapter);
 
-        //scrollView1.setChoiceMode - disregard
-
-        // To go back one page
-        //SetupAcptBtn = (Button) findViewById(R.id.SetupAcceptBtn);
+        SetupAcceptBtn = (Button) findViewById(R.id.SetupAcceptBtn);
+        //SetupAcceptBtn.setOnClickListener((View.OnClickListener) this);
         /*SetupAcceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Setup_Page.this, begin.class));
+                //startActivity(new Intent(SetupPage.this, MainActivity.class));
+                String selected;
+
             }
         });*/
+
+        //scrollView1.setChoiceMode - disregard
+
+        // To go to the next page
+        //SetupAcptBtn = (Button) findViewById(R.id.SetupAcceptBtn);
+        SetupAcceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SetupPage.this, Begin.class));
+            }
+        });
     }
 
     //@Override
-    public void onClick(View view) {
+    /*public void onClick(View view) {
         switch (view.getId()) {
             case R.id.SetupAcceptBtn:
                 showSetupAcceptDialog();
@@ -119,5 +127,5 @@ public class SetupPage extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
+    }*/
 }
