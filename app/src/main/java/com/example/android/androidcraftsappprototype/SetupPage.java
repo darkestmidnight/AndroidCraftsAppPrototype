@@ -79,9 +79,15 @@ public class SetupPage extends AppCompatActivity {
                     // Every item are inserted to the Database
                     if(checkedItems.valueAt(i)){
                         selectedItems[i] = ChoicesList.getAdapter().getItem(checkedItems.keyAt(i)).toString();
-                        dbHelper.insertData(selectedItems[i]);
+                        //dbHelper.insertData(selectedItems[i]);
                     }
                 }
+
+                int countedItems = selectedItems.length;
+                for (int i = countedItems; i < 5; i++){
+                    selectedItems[i] = "NONE";
+                }
+                dbHelper.giveData(selectedItems[0], selectedItems[1], selectedItems[2], selectedItems[3], selectedItems[4]);
 
                 // To go to next page after saving data to SQLite
                 startActivity(new Intent(SetupPage.this, Begin.class));
