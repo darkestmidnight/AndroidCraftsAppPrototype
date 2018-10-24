@@ -26,7 +26,7 @@ public class DBAdapter{
     }
 
     // To insert data to DB
-    public long insertData(String chosenItem){
+    public long insertData(int chosenItem){
         SQLiteDatabase dbItem = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBHelper.TNAME, chosenItem);
@@ -34,12 +34,12 @@ public class DBAdapter{
         return id;
     }
 
-    public void giveData(String firstSelection, String secondSelection, String thirdSelection,
-                             String fourthSelection, String fifthSelection){
+    public void giveData(int firstSelection, int secondSelection, int thirdSelection,
+                         int fourthSelection, int fifthSelection){
         //SQLiteDatabase db = dbHelper.getWritableDatabase();
         //String[] columns = {DBHelper.UID,DBHelper.TNAME};
         //Cursor cursor = db.query(DBHelper.OTHER_TABLE_NAME,columns,null,null,null,null,null);
-        String[] choicesArray = new String[5];
+        int[] choicesArray = new int[5];
         choicesArray[0] = firstSelection;
         choicesArray[1] = secondSelection;
         choicesArray[2] = thirdSelection;

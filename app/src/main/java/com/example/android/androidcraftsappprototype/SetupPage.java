@@ -29,8 +29,8 @@ public class SetupPage extends AppCompatActivity {
     ListView ChoicesList;
     protected Button SetupAcceptBtn;
     protected CharSequence[] Choices = {
-            "Nature", "Popsicle_Sticks", "Glue", "Paper", "Pencil", "Oil_Pastels", "Paint",
-                "Charcoal", "Clay", "Sunset", "Ocean"};
+            "1. Nature", "2. Popsicle_Sticks", "3. Glue", "4. Paper", "5. Pencil", "6. Oil_Pastels", "7. Paint",
+                "8. Charcoal", "9. Clay", "10. Sunset", "11. Ocean"};
     //protected ArrayList<CharSequence> SelectedOptions = new ArrayList<>();
 
 
@@ -83,11 +83,21 @@ public class SetupPage extends AppCompatActivity {
                     }
                 }
 
-                int countedItems = selectedItems.length;
-                for (int i = countedItems; i < 5; i++){
-                    selectedItems[i] = "NONE";
+                // algorithm to convert the choices to a single numerical value
+                int[] strToIntItems = new int[countSelected];
+                for (int i = 0; i < countSelected; i++) {
+                    // removes all non numerical values from the string
+                    selectedItems[i] = selectedItems[i].replaceAll("\\D+","");
+                    // converts the 1 digit string to an int
+                    strToIntItems[i] += Integer.parseInt(selectedItems[i]);
                 }
-                dbHelper.giveData(selectedItems[0], selectedItems[1], selectedItems[2], selectedItems[3], selectedItems[4]);
+
+                // algorithm to place 0 on empty fields before reaching 5 items
+                int countedItems = strToIntItems.length;
+                for (int i = countedItems; i < 5; i++){
+                        strToIntItems[i] = 0;
+                }
+                dbHelper.giveData(strToIntItems[0], strToIntItems[1], strToIntItems[2], strToIntItems[3], strToIntItems[4]);
 
                 // To go to next page after saving data to SQLite
                 startActivity(new Intent(SetupPage.this, Begin.class));
