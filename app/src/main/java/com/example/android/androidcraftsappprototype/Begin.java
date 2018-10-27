@@ -33,7 +33,7 @@ public class Begin extends AppCompatActivity {
 
         // To set the text of the page according to the DB table content
         OutputTxt = (TextView) findViewById(R.id.BeginOutputTxt);
-        String data = dbHelper.getData();
+        String data = dbHelper.returnData();
         OutputTxt.setText(data);
 
         // To go back to Home page when done

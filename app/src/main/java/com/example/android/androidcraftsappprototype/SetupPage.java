@@ -69,9 +69,15 @@ public class SetupPage extends AppCompatActivity {
             @Override
 
             public void onClick(View v) {
-                int countSelected = ChoicesList.getCount();
+                //int countSelected = ChoicesList.getCount();
+                int countSelected = 5;
                 String[] selectedItems = new String[countSelected];
                 SparseBooleanArray checkedItems = ChoicesList.getCheckedItemPositions();
+
+                // Default values of selectedItems variable
+                for (int i = 0; i < countSelected; i++){
+                    selectedItems[i] = "0. Default";
+                }
 
                 // Inserting chosen items to SQLite
                 for (int i = 0; i < countSelected; i++){
@@ -85,6 +91,8 @@ public class SetupPage extends AppCompatActivity {
 
                 // algorithm to convert the choices to a single numerical value
                 int[] strToIntItems = new int[countSelected];
+                int countedItems = strToIntItems.length;
+
                 for (int i = 0; i < countSelected; i++) {
                     // removes all non numerical values from the string
                     selectedItems[i] = selectedItems[i].replaceAll("\\D+","");
@@ -93,7 +101,7 @@ public class SetupPage extends AppCompatActivity {
                 }
 
                 // sorting algorithm for the attributes.
-                int countedItems = strToIntItems.length;
+               // int countedItems = strToIntItems.length;
                 for (int i = 0; i < countedItems; i++) // bubble sort outer loop
                 {
                     for (int j = 0; j < countedItems - i - 1; i++) {
@@ -107,10 +115,10 @@ public class SetupPage extends AppCompatActivity {
                     }
                 }
 
-                // algorithm to place 0 on empty fields before reaching 5 items
+                /*// algorithm to place 0 on empty fields before reaching 5 items
                 for (int i = countedItems; i < 5; i++){
                         strToIntItems[i] = 0;
-                }
+                }*/
                 String queryResult = dbHelper.getData(strToIntItems[0], strToIntItems[1], strToIntItems[2], strToIntItems[3], strToIntItems[4]);
                 dbHelper.insertData(queryResult);
 
