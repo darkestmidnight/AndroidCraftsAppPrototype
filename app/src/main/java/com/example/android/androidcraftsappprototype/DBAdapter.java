@@ -26,20 +26,19 @@ public class DBAdapter{
     }
 
     // To insert data to DB
-    public long insertData(int chosenItem){
+    public long insertData(String chosenItem){
         SQLiteDatabase dbItem = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DBHelper.TNAME, chosenItem);
-        long id = dbItem.insert(DBHelper.OTHER_TABLE_NAME, null , contentValues);
+        contentValues.put(DBHelper.RESULT, chosenItem);
+        long id = dbItem.insert(DBHelper.RESULT_TABLE, null , contentValues);
         return id;
     }
 
-    public void giveData(int firstSelection, int secondSelection, int thirdSelection,
-                         int fourthSelection, int fifthSelection){
+    public String returnData(){
         //SQLiteDatabase db = dbHelper.getWritableDatabase();
         //String[] columns = {DBHelper.UID,DBHelper.TNAME};
         //Cursor cursor = db.query(DBHelper.OTHER_TABLE_NAME,columns,null,null,null,null,null);
-        int[] choicesArray = new int[5];
+        /*int[] choicesArray = new int[5];
         choicesArray[0] = firstSelection;
         choicesArray[1] = secondSelection;
         choicesArray[2] = thirdSelection;
@@ -48,16 +47,38 @@ public class DBAdapter{
 
         for (int i = 0; i < choicesArray.length; i++){
             insertData(choicesArray[i]);
+        }*/
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String selectQuery = "SELECT " + DBHelper.RESULT + " FROM "+ "RESULT_TABLE";
+
+        Cursor cursor=db.rawQuery(selectQuery, new String[] {});
+        StringBuilder buffer = new StringBuilder();
+
+        // Append every data together
+        while (cursor.moveToNext())
+        {
+            //int cursorID = cursor.getInt(cursor.getColumnIndex(DBHelper.UID));
+            String chosenItem = cursor.getString(cursor.getColumnIndex(DBHelper.RESULT));
+            buffer.append(chosenItem + "/n");
         }
+        return buffer.toString();
+
     }
 
     // To get data from DB by querying the items selected
-    public String getData()
+    public String getData(int firstSelection, int secondSelection, int thirdSelection,
+                          int fourthSelection, int fifthSelection)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String firstSelection, secondSelection, thirdSelection, fourthSelection, fifthSelection;
+        String firstSelectionStr, secondSelectionStr, thirdSelectionStr, fourthSelectionStr, fifthSelectionStr;
 
-        String[] toolColumns = {DBHelper.UID, DBHelper.TNAME};
+        firstSelectionStr = Integer.toString(firstSelection);
+        secondSelectionStr = Integer.toString(secondSelection);
+        thirdSelectionStr = Integer.toString(thirdSelection);
+        fourthSelectionStr = Integer.toString(fourthSelection);
+        fifthSelectionStr = Integer.toString(fifthSelection);
+
+        /*String[] toolColumns = {DBHelper.UID, DBHelper.TNAME};
         Cursor toolCursor = db.query(DBHelper.OTHER_TABLE_NAME,toolColumns,null,null,null,null,null);
         StringBuilder toolBuffer = new StringBuilder();
         while (toolCursor.moveToNext())
@@ -66,22 +87,22 @@ public class DBAdapter{
             String chosenToolItem = toolCursor.getString(toolCursor.getColumnIndex(DBHelper.CNAME));
             toolBuffer.append(chosenToolItem + ",");
         }
-        String selectedItems = toolBuffer.toString();
-        String[] items = selectedItems.split(",");
-        List<String> itemList = new ArrayList<String>(Arrays.asList(items));
+        String selectedItems = toolBuffer.toString();*/
+        //String[] items = selectedItems.split(",");
+        /*List<String> itemList = new ArrayList<String>(Arrays.asList(items));
         firstSelection = itemList.get(0);
         secondSelection = itemList.get(1);
         thirdSelection = itemList.get(2);
         fourthSelection = itemList.get(3);
-        fifthSelection = itemList.get(4);
+        fifthSelection = itemList.get(4);*/
 
         String[] columns = {DBHelper.UID,DBHelper.CNAME};
         //Cursor cursor = db.query(DBHelper.TABLE_NAME,columns,null,null,null,null,null);
         String selectQuery = "SELECT " + DBHelper.CNAME + " FROM "+ "CraftsAppDatabase" + " WHERE First_Attribute=? "
                 + " AND Second_Attribute=? " + " AND Third_Attribute=? " + " AND Fourth_Attribute=? "
                 + " AND Fifth_Attribute=? ";
-        Cursor cursor=db.rawQuery(selectQuery, new String[] {firstSelection, secondSelection, thirdSelection,
-                            fourthSelection, fifthSelection});
+        Cursor cursor=db.rawQuery(selectQuery, new String[] {firstSelectionStr, secondSelectionStr, thirdSelectionStr,
+                            fourthSelectionStr, fifthSelectionStr});
         StringBuilder buffer = new StringBuilder();
 
         // Append every data together
@@ -113,11 +134,11 @@ public class DBAdapter{
     {
         private static final String DATABASE_NAME = "CraftsAppDatabase";    // Database Name
         private static final String TABLE_NAME = "CraftTools";   // Table Name
-        private static final String OTHER_TABLE_NAME = "Tools";   // Table Name
+        private static final String RESULT_TABLE = "Result";   // Table Name
         private static final int DATABASE_Version = 1;    // Database Version
         private static final String UID="_id";     // Column I (Primary Key)
         private static final String CNAME = "Craft_Name";    //Column II
-        private static final String TNAME = "Tool_Name";    //Column II
+        private static final String RESULT = "Result_Name";    //Column II
         private static final String FIRST_ATTRIBUTE = "First_Attribute";    //Column III
         private static final String SECOND_ATTRIBUTE = "Second_Attribute";    //Column IV
         private static final String THIRD_ATTRIBUTE = "Third_Attribute";    //Column V
@@ -128,8 +149,8 @@ public class DBAdapter{
                 ", "+FIRST_ATTRIBUTE+" VARCHAR(255), "+SECOND_ATTRIBUTE+" VARCHAR(255)" +
                 ", "+THIRD_ATTRIBUTE+" VARCHAR(255), "+FOURTH_ATTRIBUTE+" VARCHAR(255)" +
                 ", "+FIFTH_ATTRIBUTE+" VARCHAR(255));";
-        private static final String CREATE_OTHER_TABLE = "CREATE TABLE "+OTHER_TABLE_NAME+
-                " ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+TNAME+" VARCHAR(255));";
+        private static final String CREATE_OTHER_TABLE = "CREATE TABLE "+RESULT_TABLE+
+                " ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+RESULT+" VARCHAR(255));";
         private static final String DROP_TABLE ="DROP TABLE IF EXISTS "+TABLE_NAME;
         private Context context;
 
@@ -146,12 +167,12 @@ public class DBAdapter{
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(CREATE_TABLE);
             db.execSQL(CREATE_OTHER_TABLE);
-            db.execSQL("INSERT INTO " + TABLE_NAME + "(NAME, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
-                    "VALUES ('Landscape Drawing', 'Paper', 'Charcoal','Nature', 'NONE', 'NONE')");
-            db.execSQL("INSERT INTO " + TABLE_NAME + "(NAME, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
-                    "VALUES ('Popsicle Sticks House', 'Glue', 'Popsicle_Sticks','NONE', 'NONE', 'NONE')");
-            db.execSQL("INSERT INTO " + TABLE_NAME + "(NAME, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
-                    "VALUES ('Sunset Painting', 'Paper', 'Paint','Sunset', 'NONE', 'NONE')");
+            db.execSQL("INSERT INTO " + TABLE_NAME + "(CNAME, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
+                    "VALUES ('Landscape Drawing', '1', '4','8', 'NONE', 'NONE')");
+            db.execSQL("INSERT INTO " + TABLE_NAME + "(CNAME, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
+                    "VALUES ('Popsicle Sticks House', '2', '3','NONE', 'NONE', 'NONE')");
+            db.execSQL("INSERT INTO " + TABLE_NAME + "(CNAME, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
+                    "VALUES ('Sunset Painting', '4', '7','10', 'NONE', 'NONE')");
 
             /*try {
                 db.execSQL(CREATE_TABLE);

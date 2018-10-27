@@ -92,12 +92,27 @@ public class SetupPage extends AppCompatActivity {
                     strToIntItems[i] += Integer.parseInt(selectedItems[i]);
                 }
 
-                // algorithm to place 0 on empty fields before reaching 5 items
+                // sorting algorithm for the attributes.
                 int countedItems = strToIntItems.length;
+                for (int i = 0; i < countedItems; i++) // bubble sort outer loop
+                {
+                    for (int j = 0; j < countedItems - i - 1; i++) {
+                        if (strToIntItems[j] > strToIntItems[j+1])
+                        {
+                            // swap temp to strToIntItems[j]
+                            int temp = strToIntItems[j];
+                            strToIntItems[j] = strToIntItems[j+1];
+                            strToIntItems[j+1] = temp;
+                        }
+                    }
+                }
+
+                // algorithm to place 0 on empty fields before reaching 5 items
                 for (int i = countedItems; i < 5; i++){
                         strToIntItems[i] = 0;
                 }
-                dbHelper.giveData(strToIntItems[0], strToIntItems[1], strToIntItems[2], strToIntItems[3], strToIntItems[4]);
+                String queryResult = dbHelper.getData(strToIntItems[0], strToIntItems[1], strToIntItems[2], strToIntItems[3], strToIntItems[4]);
+                dbHelper.insertData(queryResult);
 
                 // To go to next page after saving data to SQLite
                 startActivity(new Intent(SetupPage.this, Begin.class));
