@@ -39,7 +39,7 @@ public class SetupPage extends AppCompatActivity {
         dbHelper = new DBAdapter(this);
 
         // Deletes the database for new selection
-        dbHelper.deleteDatabase(this);
+        //dbHelper.deleteDatabase(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_page);
@@ -115,10 +115,6 @@ public class SetupPage extends AppCompatActivity {
                     }
                 }
 
-                /*// algorithm to place 0 on empty fields before reaching 5 items
-                for (int i = countedItems; i < 5; i++){
-                        strToIntItems[i] = 0;
-                }*/
                 String queryResult = dbHelper.getData(strToIntItems[0], strToIntItems[1], strToIntItems[2], strToIntItems[3], strToIntItems[4]);
                 dbHelper.insertData(queryResult);
 

@@ -35,19 +35,6 @@ public class DBAdapter{
     }
 
     public String returnData(){
-        //SQLiteDatabase db = dbHelper.getWritableDatabase();
-        //String[] columns = {DBHelper.UID,DBHelper.TNAME};
-        //Cursor cursor = db.query(DBHelper.OTHER_TABLE_NAME,columns,null,null,null,null,null);
-        /*int[] choicesArray = new int[5];
-        choicesArray[0] = firstSelection;
-        choicesArray[1] = secondSelection;
-        choicesArray[2] = thirdSelection;
-        choicesArray[3] = fourthSelection;
-        choicesArray[4] = fifthSelection;
-
-        for (int i = 0; i < choicesArray.length; i++){
-            insertData(choicesArray[i]);
-        }*/
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String selectQuery = "SELECT " + DBHelper.RESULT + " FROM "+ "RESULT_TABLE";
 
@@ -78,27 +65,9 @@ public class DBAdapter{
         fourthSelectionStr = Integer.toString(fourthSelection);
         fifthSelectionStr = Integer.toString(fifthSelection);
 
-        /*String[] toolColumns = {DBHelper.UID, DBHelper.TNAME};
-        Cursor toolCursor = db.query(DBHelper.OTHER_TABLE_NAME,toolColumns,null,null,null,null,null);
-        StringBuilder toolBuffer = new StringBuilder();
-        while (toolCursor.moveToNext())
-        {
-            //int cursorID = cursor.getInt(cursor.getColumnIndex(DBHelper.UID));
-            String chosenToolItem = toolCursor.getString(toolCursor.getColumnIndex(DBHelper.CNAME));
-            toolBuffer.append(chosenToolItem + ",");
-        }
-        String selectedItems = toolBuffer.toString();*/
-        //String[] items = selectedItems.split(",");
-        /*List<String> itemList = new ArrayList<String>(Arrays.asList(items));
-        firstSelection = itemList.get(0);
-        secondSelection = itemList.get(1);
-        thirdSelection = itemList.get(2);
-        fourthSelection = itemList.get(3);
-        fifthSelection = itemList.get(4);*/
-
         String[] columns = {DBHelper.UID,DBHelper.CNAME};
         //Cursor cursor = db.query(DBHelper.TABLE_NAME,columns,null,null,null,null,null);
-        String selectQuery = "SELECT " + DBHelper.CNAME + " FROM "+ "CraftsAppDatabase" + " WHERE First_Attribute=? "
+        String selectQuery = "SELECT " + DBHelper.CNAME + " FROM "+ DBHelper.TABLE_NAME + " WHERE First_Attribute=? "
                 + " AND Second_Attribute=? " + " AND Third_Attribute=? " + " AND Fourth_Attribute=? "
                 + " AND Fifth_Attribute=? ";
         Cursor cursor=db.rawQuery(selectQuery, new String[] {firstSelectionStr, secondSelectionStr, thirdSelectionStr,
@@ -132,7 +101,7 @@ public class DBAdapter{
 
     static class DBHelper extends SQLiteOpenHelper
     {
-        private static final String DATABASE_NAME = "CraftsAppDatabase";    // Database Name
+        private static final String DATABASE_NAME = "CraftsAppDatabase.db";    // Database Name
         private static final String TABLE_NAME = "CraftTools";   // Table Name
         private static final String RESULT_TABLE = "Result";   // Table Name
         private static final int DATABASE_Version = 1;    // Database Version
@@ -151,7 +120,7 @@ public class DBAdapter{
                 ", "+FIFTH_ATTRIBUTE+" VARCHAR(255));";
         private static final String CREATE_OTHER_TABLE = "CREATE TABLE "+RESULT_TABLE+
                 " ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+RESULT+" VARCHAR(255));";
-        private static final String DROP_TABLE ="DROP TABLE IF EXISTS "+TABLE_NAME;
+        private static final String DROP_TABLE ="DROP TABLE IF EXISTS "+RESULT_TABLE;
         private Context context;
 
         public DBHelper(Context context) {
@@ -165,13 +134,14 @@ public class DBAdapter{
         }*/
 
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(CREATE_TABLE);
+            db.execSQL(DROP_TABLE);
             db.execSQL(CREATE_OTHER_TABLE);
-            db.execSQL("INSERT INTO " + TABLE_NAME + "(CNAME, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
+            db.execSQL(CREATE_TABLE);
+            db.execSQL("INSERT INTO " + TABLE_NAME + "(Craft_Name, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
                     "VALUES ('Landscape Drawing', '1', '4','8', 'NONE', 'NONE')");
-            db.execSQL("INSERT INTO " + TABLE_NAME + "(CNAME, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
+            db.execSQL("INSERT INTO " + TABLE_NAME + "(Craft_Name, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
                     "VALUES ('Popsicle Sticks House', '2', '3','NONE', 'NONE', 'NONE')");
-            db.execSQL("INSERT INTO " + TABLE_NAME + "(CNAME, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
+            db.execSQL("INSERT INTO " + TABLE_NAME + "(Craft_Name, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
                     "VALUES ('Sunset Painting', '4', '7','10', 'NONE', 'NONE')");
 
             /*try {
@@ -183,14 +153,15 @@ public class DBAdapter{
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            db.execSQL(DROP_TABLE);
+            //db.execSQL(DROP_TABLE);
+            onCreate(db);
             if (newVersion > oldVersion) {
                 db.execSQL("ALTER TABLE CraftTools ADD COLUMN FIRST_ATTRIBUTE INTEGER DEFAULT 0");
                 db.execSQL("ALTER TABLE CraftTools ADD COLUMN SECOND_ATTRIBUTE INTEGER DEFAULT 0");
                 db.execSQL("ALTER TABLE CraftTools ADD COLUMN THIRD_ATTRIBUTE INTEGER DEFAULT 0");
                 db.execSQL("ALTER TABLE CraftTools ADD COLUMN FOURTH_ATTRIBUTE INTEGER DEFAULT 0");
                 db.execSQL("ALTER TABLE CraftTools ADD COLUMN FIFTH_ATTRIBUTE INTEGER DEFAULT 0");
-            onCreate(db);
+            //onCreate(db);
             /*try {
                 Message.message(context,"OnUpgrade");
                 db.execSQL(DROP_TABLE);
