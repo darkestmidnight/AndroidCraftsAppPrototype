@@ -36,7 +36,7 @@ public class DBAdapter{
 
     public String returnData(){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String selectQuery = "SELECT " + DBHelper.RESULT + " FROM "+ "RESULT_TABLE";
+        String selectQuery = "SELECT " + DBHelper.RESULT + " FROM "+ DBHelper.RESULT_TABLE;
 
         Cursor cursor=db.rawQuery(selectQuery, new String[] {});
         StringBuilder buffer = new StringBuilder();
@@ -138,11 +138,11 @@ public class DBAdapter{
             db.execSQL(CREATE_OTHER_TABLE);
             db.execSQL(CREATE_TABLE);
             db.execSQL("INSERT INTO " + TABLE_NAME + "(Craft_Name, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
-                    "VALUES ('Landscape Drawing', '1', '4','8', 'NONE', 'NONE')");
+                    "VALUES ('Landscape Drawing', '1', '4','8', '0', '0')");
             db.execSQL("INSERT INTO " + TABLE_NAME + "(Craft_Name, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
-                    "VALUES ('Popsicle Sticks House', '2', '3','NONE', 'NONE', 'NONE')");
+                    "VALUES ('Popsicle Sticks House', '2', '3','0', '0', '0')");
             db.execSQL("INSERT INTO " + TABLE_NAME + "(Craft_Name, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
-                    "VALUES ('Sunset Painting', '4', '7','10', 'NONE', 'NONE')");
+                    "VALUES ('Sunset Painting', '4', '7','10', '0', '0')");
 
             /*try {
                 db.execSQL(CREATE_TABLE);
