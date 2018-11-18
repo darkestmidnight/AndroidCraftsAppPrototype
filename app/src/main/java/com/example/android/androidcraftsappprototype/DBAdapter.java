@@ -65,22 +65,27 @@ public class DBAdapter{
         fourthSelectionStr = Integer.toString(fourthSelection);
         fifthSelectionStr = Integer.toString(fifthSelection);
 
-        String[] columns = {DBHelper.UID,DBHelper.CNAME};
+        //String[] columns = {DBHelper.UID,DBHelper.CNAME};
         //Cursor cursor = db.query(DBHelper.TABLE_NAME,columns,null,null,null,null,null);
-        String selectQuery = "SELECT " + DBHelper.CNAME + " FROM "+ DBHelper.TABLE_NAME + " WHERE First_Attribute=? "
-                + " AND Second_Attribute=? " + " AND Third_Attribute=? " + " AND Fourth_Attribute=? "
-                + " AND Fifth_Attribute=? ";
+        String selectQuery = "SELECT * FROM "+ DBHelper.TABLE_NAME + " WHERE " + DBHelper.FIRST_ATTRIBUTE + "=? "
+                + " AND " + DBHelper.SECOND_ATTRIBUTE + "=? " + " AND " + DBHelper.THIRD_ATTRIBUTE + "=? " + " AND " + DBHelper.FOURTH_ATTRIBUTE + "=? "
+                + " AND " + DBHelper.FIFTH_ATTRIBUTE + "=?";
         Cursor cursor=db.rawQuery(selectQuery, new String[] {firstSelectionStr, secondSelectionStr, thirdSelectionStr,
                             fourthSelectionStr, fifthSelectionStr});
         StringBuilder buffer = new StringBuilder();
 
         // Append every data together
-        while (cursor.moveToNext())
+        do {
+            //int cursorID = cursor.getInt(cursor.getColumnIndex(DBHelper.UID));
+            String chosenItem = cursor.getString(cursor.getColumnIndex(DBHelper.CNAME));
+            buffer.append(chosenItem + " ");
+        } while (cursor.moveToNext());
+        /*while (cursor.moveToNext())
         {
             //int cursorID = cursor.getInt(cursor.getColumnIndex(DBHelper.UID));
             String chosenItem = cursor.getString(cursor.getColumnIndex(DBHelper.CNAME));
-            buffer.append(chosenItem + "/n");
-        }
+            buffer.append(chosenItem + " ");
+        }*/
         return buffer.toString();
     }
 
