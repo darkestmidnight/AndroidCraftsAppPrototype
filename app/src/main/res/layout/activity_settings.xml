@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_background"
+    android:id="@+id/CurrentLayout"
+    tools:context=".Settings"
+    tools:layout_editor_absoluteY="81dp">
+
+    <ImageButton
+        android:id="@+id/bckgroundbtn1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="209dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginLeft="49dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="77dp"
+        app:layout_constraintBottom_toTopOf="@+id/upldbckgroundbtn"
+        app:layout_constraintEnd_toStartOf="@+id/bckgroundbtn2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/colorAccent" />
+
+    <ImageButton
+        android:id="@+id/bckgroundbtn2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginRight="29dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bckgroundbtn3"
+        app:layout_constraintEnd_toStartOf="@+id/bckgroundbtn3"
+        app:layout_constraintStart_toEndOf="@+id/bckgroundbtn1"
+        app:layout_constraintTop_toTopOf="@+id/bckgroundbtn3"
+        app:srcCompat="@android:color/holo_blue_dark" />
+
+    <ImageButton
+        android:id="@+id/bckgroundbtn3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="209dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginRight="51dp"
+        android:layout_marginTop="77dp"
+        app:layout_constraintBottom_toTopOf="@+id/upldbckgroundbtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bckgroundbtn2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/holo_orange_dark" />
+
+    <Button
+        android:id="@+id/upldbckgroundbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:fontFamily="serif-monospace"
+        android:text="Upload Image"
+        android:textColor="#C18400"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bckgroundbtn3" />
+
+</android.support.constraint.ConstraintLayout>

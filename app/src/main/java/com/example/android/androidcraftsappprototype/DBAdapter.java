@@ -74,18 +74,25 @@ public class DBAdapter{
                             fourthSelectionStr, fifthSelectionStr});
         StringBuilder buffer = new StringBuilder();
 
-        // Append every data together
-        do {
-            //int cursorID = cursor.getInt(cursor.getColumnIndex(DBHelper.UID));
-            String chosenItem = cursor.getString(cursor.getColumnIndex(DBHelper.CNAME));
-            buffer.append(chosenItem + " ");
-        } while (cursor.moveToNext());
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            int tresult = cursor.getCount();
+
+            // Append every data together
+            do {
+                //int cursorID = cursor.getInt(cursor.getColumnIndex(DBHelper.UID));
+                String chosenItem = cursor.getString(cursor.getColumnIndex(DBHelper.CNAME));
+                buffer.append(chosenItem + " ");
+            } while (cursor.moveToNext());
         /*while (cursor.moveToNext())
         {
             //int cursorID = cursor.getInt(cursor.getColumnIndex(DBHelper.UID));
             String chosenItem = cursor.getString(cursor.getColumnIndex(DBHelper.CNAME));
             buffer.append(chosenItem + " ");
         }*/
+        }
+
         return buffer.toString();
     }
 
@@ -104,7 +111,7 @@ public class DBAdapter{
         return  count;
     }
 
-    static class DBHelper extends SQLiteOpenHelper
+    class DBHelper extends SQLiteOpenHelper
     {
         private static final String DATABASE_NAME = "CraftsAppDatabase.db";    // Database Name
         private static final String TABLE_NAME = "CraftTools";   // Table Name

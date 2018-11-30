@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".SetupPage" />
         <activity android:name=".Begin" />
-        <activity android:name=".DBAdapter"></activity>
+        <activity android:name=".DBAdapter" />
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>

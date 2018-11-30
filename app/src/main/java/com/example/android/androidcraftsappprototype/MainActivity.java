@@ -49,13 +49,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, SetupPage.class));
             }
         });
-        /*HomeSettingsBtn = (ImageButton) findViewById(R.id.HomeSettingsBtn);
+
+        HomeSettingsBtn = (ImageButton) findViewById(R.id.HomeSettingsBtn);
         HomeSettingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Settings.class));
             }
-        });*/
+        });
     }
 
 
