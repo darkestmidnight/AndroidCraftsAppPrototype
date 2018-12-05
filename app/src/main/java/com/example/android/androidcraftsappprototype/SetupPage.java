@@ -1,7 +1,9 @@
 package com.example.android.androidcraftsappprototype;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.media.Image;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +24,13 @@ public class SetupPage extends AppCompatActivity {
     // variables for home and setting up
     DBAdapter dbHelper;
     ImageButton SetupHomeBtn;
-    //Button SetupAcptBtn;
+
+    // variables for sharedpreference
+    SharedPreferences ShPreference;
+    SharedPreferences.Editor PrefEditor;
+    static String MyPREFERENCES = "MyPrefs";
+    String BackgroundChoice = "BckgrndChoice";
+    ConstraintLayout SetupPageLayout;
 
     // variables for multiple selection
     ArrayAdapter<CharSequence> adapter;
@@ -36,6 +44,18 @@ public class SetupPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // sets the background according to the shared preference
+        if (ShPreference.getInt(BackgroundChoice, -1) == 1){
+            SetupPageLayout.setBackgroundResource(R.drawable.app_background);
+        }
+        else if (ShPreference.getInt(BackgroundChoice, -1) == 2){
+            SetupPageLayout.setBackgroundResource(R.drawable.app_background2);
+        }
+        else if (ShPreference.getInt(BackgroundChoice, -1) == 3){
+            SetupPageLayout.setBackgroundResource(R.drawable.app_background3);
+        }
+
         dbHelper = new DBAdapter(this);
 
         // Deletes the database for new selection

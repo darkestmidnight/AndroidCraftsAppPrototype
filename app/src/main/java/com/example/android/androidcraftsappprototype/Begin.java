@@ -1,5 +1,7 @@
 package com.example.android.androidcraftsappprototype;
 
+import android.content.SharedPreferences;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -15,10 +17,28 @@ public class Begin extends AppCompatActivity {
     Button BeginDoneBtn;
     TextView OutputTxt;
 
+    // variables for sharedpreference
+    SharedPreferences ShPreference;
+    SharedPreferences.Editor PrefEditor;
+    static String MyPREFERENCES = "MyPrefs";
+    String BackgroundChoice = "BckgrndChoice";
+    ConstraintLayout BeginLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_begin);
+
+        // sets the background according to the shared preference
+        if (ShPreference.getInt(BackgroundChoice, -1) == 1){
+            BeginLayout.setBackgroundResource(R.drawable.app_background);
+        }
+        else if (ShPreference.getInt(BackgroundChoice, -1) == 2){
+            BeginLayout.setBackgroundResource(R.drawable.app_background2);
+        }
+        else if (ShPreference.getInt(BackgroundChoice, -1) == 3){
+            BeginLayout.setBackgroundResource(R.drawable.app_background3);
+        }
 
         dbHelper = new DBAdapter(this);
 
