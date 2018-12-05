@@ -1,5 +1,6 @@
 package com.example.android.androidcraftsappprototype;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.media.Image;
@@ -45,6 +46,9 @@ public class SetupPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+        SetupPageLayout = (ConstraintLayout)findViewById(R.id.SetupPageLayout);
+        ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         // sets the background according to the shared preference
         if (ShPreference.getInt(BackgroundChoice, -1) == 1){
             SetupPageLayout.setBackgroundResource(R.drawable.app_background);

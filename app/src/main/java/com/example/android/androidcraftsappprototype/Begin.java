@@ -1,5 +1,6 @@
 package com.example.android.androidcraftsappprototype;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,9 @@ public class Begin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_begin);
+
+        BeginLayout = (ConstraintLayout)findViewById(R.id.BeginLayout);
+        ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         // sets the background according to the shared preference
         if (ShPreference.getInt(BackgroundChoice, -1) == 1){

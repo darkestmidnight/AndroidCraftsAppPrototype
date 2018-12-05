@@ -1,5 +1,6 @@
 package com.example.android.androidcraftsappprototype;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.support.constraint.ConstraintLayout;
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MainMenuLayout = (ConstraintLayout)findViewById(R.id.main_menu_layout);
+        ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         // sets the background according to the shared preference
         if (ShPreference.getInt(BackgroundChoice, -1) == 1){
