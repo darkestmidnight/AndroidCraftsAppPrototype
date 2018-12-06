@@ -26,11 +26,31 @@ public class Begin extends AppCompatActivity {
     ConstraintLayout BeginLayout;
 
     @Override
+    protected void onResume(){
+            super.onResume();
+
+            BeginLayout = (ConstraintLayout)findViewById(R.id.BeginLayout);
+            ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+            // sets the background according to the shared preference
+            if (ShPreference.getInt(BackgroundChoice, -1) == 1){
+                BeginLayout.setBackgroundResource(R.drawable.app_background);
+            }
+            else if (ShPreference.getInt(BackgroundChoice, -1) == 2){
+                BeginLayout.setBackgroundResource(R.drawable.app_background2);
+            }
+            else if (ShPreference.getInt(BackgroundChoice, -1) == 3){
+                BeginLayout.setBackgroundResource(R.drawable.app_background3);
+            }
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_begin);
 
-        BeginLayout = (ConstraintLayout)findViewById(R.id.BeginLayout);
+        /*BeginLayout = (ConstraintLayout)findViewById(R.id.BeginLayout);
         ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         // sets the background according to the shared preference
@@ -42,7 +62,7 @@ public class Begin extends AppCompatActivity {
         }
         else if (ShPreference.getInt(BackgroundChoice, -1) == 3){
             BeginLayout.setBackgroundResource(R.drawable.app_background3);
-        }
+        }*/
 
         dbHelper = new DBAdapter(this);
 

@@ -48,6 +48,7 @@ public class DBAdapter{
             String chosenItem = cursor.getString(cursor.getColumnIndex(DBHelper.RESULT));
             buffer.append(chosenItem + "/n");
         }
+        cursor.close();
         return buffer.toString();
 
     }
@@ -92,6 +93,7 @@ public class DBAdapter{
             buffer.append(chosenItem + " ");
         }*/
         }
+        cursor.close();
 
         return buffer.toString();
     }
@@ -150,11 +152,11 @@ public class DBAdapter{
             db.execSQL(CREATE_OTHER_TABLE);
             db.execSQL(CREATE_TABLE);
             db.execSQL("INSERT INTO " + TABLE_NAME + "(Craft_Name, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
-                    "VALUES ('Landscape Drawing', '1', '4','8', '0', '0')");
+                    "VALUES ('Landscape Drawing', 1, 4, 8, 0, 0)");
             db.execSQL("INSERT INTO " + TABLE_NAME + "(Craft_Name, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
-                    "VALUES ('Popsicle Sticks House', '2', '3','0', '0', '0')");
+                    "VALUES ('Popsicle Sticks House', 2, 3, 0, 0, 0)");
             db.execSQL("INSERT INTO " + TABLE_NAME + "(Craft_Name, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
-                    "VALUES ('Sunset Painting', '4', '7','10', '0', '0')");
+                    "VALUES ('Sunset Painting', 4, 7, 10, 0, 0)");
 
             /*try {
                 db.execSQL(CREATE_TABLE);

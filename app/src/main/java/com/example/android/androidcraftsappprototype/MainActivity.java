@@ -32,9 +32,8 @@ public class MainActivity extends AppCompatActivity {
     ConstraintLayout MainMenuLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void onResume(){
+        super.onResume();
 
         MainMenuLayout = (ConstraintLayout)findViewById(R.id.main_menu_layout);
         ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -49,6 +48,27 @@ public class MainActivity extends AppCompatActivity {
         else if (ShPreference.getInt(BackgroundChoice, -1) == 3){
             MainMenuLayout.setBackgroundResource(R.drawable.app_background3);
         }
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        //MainMenuLayout = (ConstraintLayout)findViewById(R.id.main_menu_layout);
+        //ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+        // sets the background according to the shared preference
+        /*if (ShPreference.getInt(BackgroundChoice, -1) == 1){
+            MainMenuLayout.setBackgroundResource(R.drawable.app_background);
+        }
+        else if (ShPreference.getInt(BackgroundChoice, -1) == 2){
+            MainMenuLayout.setBackgroundResource(R.drawable.app_background2);
+        }
+        else if (ShPreference.getInt(BackgroundChoice, -1) == 3){
+            MainMenuLayout.setBackgroundResource(R.drawable.app_background3);
+        }*/
 
         // Example of a call to a native method
         //TextView tv = (TextView) findViewById(R.id.sample_text);

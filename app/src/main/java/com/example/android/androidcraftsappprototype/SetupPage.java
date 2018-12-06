@@ -42,10 +42,9 @@ public class SetupPage extends AppCompatActivity {
                 "8. Charcoal", "9. Clay", "10. Sunset", "11. Ocean"};
     //protected ArrayList<CharSequence> SelectedOptions = new ArrayList<>();
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    protected void onResume(){
+        super.onResume();
 
         SetupPageLayout = (ConstraintLayout)findViewById(R.id.SetupPageLayout);
         ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -60,13 +59,31 @@ public class SetupPage extends AppCompatActivity {
             SetupPageLayout.setBackgroundResource(R.drawable.app_background3);
         }
 
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_setup_page);
+
+        /*SetupPageLayout = (ConstraintLayout)findViewById(R.id.SetupPageLayout);
+        ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        // sets the background according to the shared preference
+        if (ShPreference.getInt(BackgroundChoice, -1) == 1){
+            SetupPageLayout.setBackgroundResource(R.drawable.app_background);
+        }
+        else if (ShPreference.getInt(BackgroundChoice, -1) == 2){
+            SetupPageLayout.setBackgroundResource(R.drawable.app_background2);
+        }
+        else if (ShPreference.getInt(BackgroundChoice, -1) == 3){
+            SetupPageLayout.setBackgroundResource(R.drawable.app_background3);
+        }*/
+
         dbHelper = new DBAdapter(this);
 
         // Deletes the database for new selection
         //dbHelper.deleteDatabase(this);
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setup_page);
 
         // to go back to Home page
         SetupHomeBtn = (ImageButton) findViewById(R.id.SetupHomeBtn);
