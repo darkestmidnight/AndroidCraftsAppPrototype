@@ -46,6 +46,10 @@ public class SetupPage extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
 
+        dbHelper = new DBAdapter(this);
+        // to empty result table
+        dbHelper.emptyResultTable();
+
         SetupPageLayout = (ConstraintLayout)findViewById(R.id.SetupPageLayout);
         ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         // sets the background according to the shared preference

@@ -25,6 +25,13 @@ public class DBAdapter{
         context.deleteDatabase("CraftsAppDatabase");
     }
 
+    // rename as emptyResultTable
+    public void emptyResultTable(){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        //db.execSQL(dbHelper.DROP_TABLE);
+        db.execSQL("DELETE FROM "+ dbHelper.RESULT_TABLE);
+    }
+
     // To insert data to DB
     public long insertData(String chosenItem){
         SQLiteDatabase dbItem = dbHelper.getWritableDatabase();
@@ -46,7 +53,7 @@ public class DBAdapter{
         {
             //int cursorID = cursor.getInt(cursor.getColumnIndex(DBHelper.UID));
             String chosenItem = cursor.getString(cursor.getColumnIndex(DBHelper.RESULT));
-            buffer.append(chosenItem + "/n");
+            buffer.append(chosenItem + "");
         }
         cursor.close();
         return buffer.toString();
@@ -118,7 +125,7 @@ public class DBAdapter{
         private static final String DATABASE_NAME = "CraftsAppDatabase.db";    // Database Name
         private static final String TABLE_NAME = "CraftTools";   // Table Name
         private static final String RESULT_TABLE = "Result";   // Table Name
-        private static final int DATABASE_Version = 1;    // Database Version
+        private static final int DATABASE_Version = 3;    // Database Version
         private static final String UID="_id";     // Column I (Primary Key)
         private static final String CNAME = "Craft_Name";    //Column II
         private static final String RESULT = "Result_Name";    //Column II
@@ -128,13 +135,14 @@ public class DBAdapter{
         private static final String FOURTH_ATTRIBUTE = "Fourth_Attribute";    //Column VI
         private static final String FIFTH_ATTRIBUTE = "Fifth_Attribute";    //Column VII
         private static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+
-                " ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+CNAME+" VARCHAR(255)" +
-                ", "+FIRST_ATTRIBUTE+" VARCHAR(255), "+SECOND_ATTRIBUTE+" VARCHAR(255)" +
-                ", "+THIRD_ATTRIBUTE+" VARCHAR(255), "+FOURTH_ATTRIBUTE+" VARCHAR(255)" +
-                ", "+FIFTH_ATTRIBUTE+" VARCHAR(255));";
+                " ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+CNAME+" INTEGER DEFAULT 0" +
+                ", "+FIRST_ATTRIBUTE+" INTEGER DEFAULT 0, "+SECOND_ATTRIBUTE+" INTEGER DEFAULT 0" +
+                ", "+THIRD_ATTRIBUTE+" INTEGER DEFAULT 0, "+FOURTH_ATTRIBUTE+" INTEGER DEFAULT 0" +
+                ", "+FIFTH_ATTRIBUTE+" INTEGER DEFAULT 0);";
         private static final String CREATE_OTHER_TABLE = "CREATE TABLE "+RESULT_TABLE+
                 " ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+RESULT+" VARCHAR(255));";
         private static final String DROP_TABLE ="DROP TABLE IF EXISTS "+RESULT_TABLE;
+        private static final String DROP_CRAFTS_TABLE ="DROP TABLE IF EXISTS "+TABLE_NAME;
         private Context context;
 
         public DBHelper(Context context) {
@@ -148,7 +156,8 @@ public class DBAdapter{
         }*/
 
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(DROP_TABLE);
+            //db.execSQL(DROP_TABLE);
+            db.execSQL(DROP_CRAFTS_TABLE);
             db.execSQL(CREATE_OTHER_TABLE);
             db.execSQL(CREATE_TABLE);
             db.execSQL("INSERT INTO " + TABLE_NAME + "(Craft_Name, First_Attribute, Second_Attribute, Third_Attribute, Fourth_Attribute, Fifth_Attribute ) " +
@@ -169,12 +178,12 @@ public class DBAdapter{
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             //db.execSQL(DROP_TABLE);
             onCreate(db);
-            if (newVersion > oldVersion) {
+            /*if (newVersion > oldVersion) {
                 db.execSQL("ALTER TABLE CraftTools ADD COLUMN FIRST_ATTRIBUTE INTEGER DEFAULT 0");
                 db.execSQL("ALTER TABLE CraftTools ADD COLUMN SECOND_ATTRIBUTE INTEGER DEFAULT 0");
                 db.execSQL("ALTER TABLE CraftTools ADD COLUMN THIRD_ATTRIBUTE INTEGER DEFAULT 0");
                 db.execSQL("ALTER TABLE CraftTools ADD COLUMN FOURTH_ATTRIBUTE INTEGER DEFAULT 0");
-                db.execSQL("ALTER TABLE CraftTools ADD COLUMN FIFTH_ATTRIBUTE INTEGER DEFAULT 0");
+                db.execSQL("ALTER TABLE CraftTools ADD COLUMN FIFTH_ATTRIBUTE INTEGER DEFAULT 0");*/
             //onCreate(db);
             /*try {
                 Message.message(context,"OnUpgrade");
@@ -183,8 +192,5 @@ public class DBAdapter{
             }catch (Exception e) {
                 Message.message(context,""+e);*/
             }
-        }
-
-
     }
 }
