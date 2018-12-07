@@ -28,10 +28,15 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
         AbstractBtn1 = (ImageButton) findViewById(R.id.bckgroundbtn1);
         AbstractBtn2 = (ImageButton) findViewById(R.id.bckgroundbtn2);
         AbstractBtn3 = (ImageButton) findViewById(R.id.bckgroundbtn3);
+
         AbstractBtn1.setOnClickListener(this);
         AbstractBtn2.setOnClickListener(this);
         AbstractBtn3.setOnClickListener(this);
+
+        // Tells CurrentLayout of the settingsActivity id of the activity background
         CurrentLayout = (ConstraintLayout)findViewById(R.id.CurrentLayout);
+
+        // gets the saved SharedPreferences values if any
         ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         // sets the background according to the shared preference

@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }*/
 
+    // Variables for general buttons of this activity
     ImageButton AboutBtn, HomeSettingsBtn;
     String url = "http://www.google.com";
     Button HomeBeginBtn;
@@ -35,7 +36,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
 
+        // Tells MainMenuLayout id of the activity background
         MainMenuLayout = (ConstraintLayout)findViewById(R.id.main_menu_layout);
+
+        // gets the saved SharedPreferences values
         ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         // sets the background according to the shared preference
@@ -55,24 +59,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //MainMenuLayout = (ConstraintLayout)findViewById(R.id.main_menu_layout);
-        //ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-
-        // sets the background according to the shared preference
-        /*if (ShPreference.getInt(BackgroundChoice, -1) == 1){
-            MainMenuLayout.setBackgroundResource(R.drawable.app_background);
-        }
-        else if (ShPreference.getInt(BackgroundChoice, -1) == 2){
-            MainMenuLayout.setBackgroundResource(R.drawable.app_background2);
-        }
-        else if (ShPreference.getInt(BackgroundChoice, -1) == 3){
-            MainMenuLayout.setBackgroundResource(R.drawable.app_background3);
-        }*/
-
-        // Example of a call to a native method
-        //TextView tv = (TextView) findViewById(R.id.sample_text);
-        //tv.setText(stringFromJNI());
 
         // Button to go to google.com
         AboutBtn = (ImageButton) findViewById(R.id.HomePurposeBtn);

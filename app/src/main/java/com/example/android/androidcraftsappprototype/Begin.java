@@ -29,7 +29,10 @@ public class Begin extends AppCompatActivity {
     protected void onResume(){
             super.onResume();
 
+            // Tells BeginLayout id of the activity background
             BeginLayout = (ConstraintLayout)findViewById(R.id.BeginLayout);
+
+            // gets the saved SharedPreferences values
             ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
             // sets the background according to the shared preference
@@ -49,20 +52,6 @@ public class Begin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_begin);
-
-        /*BeginLayout = (ConstraintLayout)findViewById(R.id.BeginLayout);
-        ShPreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-
-        // sets the background according to the shared preference
-        if (ShPreference.getInt(BackgroundChoice, -1) == 1){
-            BeginLayout.setBackgroundResource(R.drawable.app_background);
-        }
-        else if (ShPreference.getInt(BackgroundChoice, -1) == 2){
-            BeginLayout.setBackgroundResource(R.drawable.app_background2);
-        }
-        else if (ShPreference.getInt(BackgroundChoice, -1) == 3){
-            BeginLayout.setBackgroundResource(R.drawable.app_background3);
-        }*/
 
         dbHelper = new DBAdapter(this);
 
