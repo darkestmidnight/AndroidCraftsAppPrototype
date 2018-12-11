@@ -19,7 +19,9 @@
         <activity android:name=".SetupPage" />
         <activity android:name=".Begin" />
         <activity android:name=".DBAdapter" />
-        <activity android:name=".Settings"></activity>
+        <activity android:name=".Settings" />
+        <activity android:name=".OnlineOffline" />
+        <activity android:name=".Login"></activity>
     </application>
 
 </manifest>
