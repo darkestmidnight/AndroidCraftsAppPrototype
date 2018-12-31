@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     // Variables for general buttons of this activity
     ImageButton AboutBtn, HomeSettingsBtn;
     String url = "http://www.google.com";
-    Button HomeBeginBtn;
+    Button HomeBeginBtn, HomeLoadBtn;
 
     // variables for sharedpreference
     SharedPreferences ShPreference;
@@ -77,6 +77,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SetupPage.class));
+            }
+        });
+
+        HomeLoadBtn = (Button) findViewById(R.id.HomeLoadBtn);
+        HomeLoadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Login.class));
             }
         });
 

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.androidcraftsappprototype">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +23,9 @@
         <activity android:name=".DBAdapter" />
         <activity android:name=".Settings" />
         <activity android:name=".OnlineOffline" />
-        <activity android:name=".Login"></activity>
+        <activity android:name=".Login" />
+        <activity android:name=".WSAdapter" />
+        <activity android:name=".PostsActivity"></activity>
     </application>
 
 </manifest>
