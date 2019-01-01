@@ -45,7 +45,7 @@ public class Login extends AppCompatActivity {
 
                 // If the user is authenticated, then transfer to the MainActivity page
                 if (APIAuthentication(strUserName, strPassWord, APIUrl)){
-                    startActivity(new Intent(Login.this, MainActivity.class));
+                    startActivity(new Intent(Login.this, Posts.class));
                 }
             }
         });

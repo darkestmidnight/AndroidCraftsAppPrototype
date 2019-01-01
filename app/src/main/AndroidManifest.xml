@@ -25,7 +25,7 @@
         <activity android:name=".OnlineOffline" />
         <activity android:name=".Login" />
         <activity android:name=".WSAdapter" />
-        <activity android:name=".PostsActivity"></activity>
+        <activity android:name=".Posts"></activity>
     </application>
 
 </manifest>

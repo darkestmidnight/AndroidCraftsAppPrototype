@@ -12,6 +12,10 @@ import java.io.InputStreamReader;
 
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 // I forgot what WS stands for, but this class serves as an adapter for JSON and Online stuff
 // I think it stands for With-Server Adapter
@@ -24,6 +28,8 @@ public class WSAdapter extends AppCompatActivity {
     }
 
     static public class SendAPIRequests extends AsyncTask<String, Void, String> {
+
+        // Add a pre-execute thing
 
         @Override
         protected String doInBackground(String... params) {
@@ -86,6 +92,24 @@ public class WSAdapter extends AppCompatActivity {
             super.onPostExecute(result);
             // expecting a response code fro my server upon receiving the POST data
             Log.e("TAG", result);
+
+            Posts.PostsDetails postsHelper = new Posts().new PostsDetails();
+
+            // For posts
+            try {
+                JSONObject pJObj = new JSONObject(result);
+                JSONArray pJObjArray = pJObj.getJSONArray("posts");
+
+                for (int i = 0; i < pJObjArray.length(); i++) {
+                    JSONObject pJObj_data = pJObjArray.getJSONObject(i);
+                    postsHelper.setPost(pJObj_data.getInt("id"), "post_title", "post_content");
+                }
+
+
+            } catch (JSONException e) {
+                //Toast.makeText(JSonActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                Log.d("Json","Exception = "+e.toString());
+            }
         }
     }
 

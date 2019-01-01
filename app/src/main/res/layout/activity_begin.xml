@@ -15,7 +15,6 @@
         android:layout_marginBottom="44dp"
         android:layout_marginTop="39dp"
         android:fontFamily="serif-monospace"
-        android:text="Done"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
