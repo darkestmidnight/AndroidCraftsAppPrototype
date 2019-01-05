@@ -34,19 +34,11 @@ public class Posts extends AppCompatActivity {
 
         PostsDetails postDetailsHelper = new PostsDetails();
 
-        //PostsHelper = new WSAdapter.SendAPIRequests();
-
-        //postsSect = (TextView) findViewById(R.id.PostsSection);
         postsDoneBtn = (Button) findViewById(R.id.PostsDoneButton);
 
-        PostsHelper = new WSAdapter.SendAPIRequests();
-
-        PostsHelper.execute("192.168.0.18:8000/api");
-
+        postDetailsHelper.callPostDetails("192.168.0.18:8000/api");
         postDetailsHelper.ListPosts();
-
-        //JSONObject postData = new JSONObject();
-
+        postDetailsHelper.postDetailsCalled('n');
 
         postsDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,29 +49,46 @@ public class Posts extends AppCompatActivity {
         });
     }
 
-    private String getPosts(String url) {
-        PostsHelper = new WSAdapter.SendAPIRequests();
-
-        PostsHelper.execute("192.168.0.18:8000/api");
-
-
-        return url;
-    }
-
     public class PostsDetails {
         //String post_title, post_content;
         ArrayList<Integer> post_id = new ArrayList<Integer>();
         ArrayList<String> post_title = new ArrayList<String>();
         ArrayList<String> post_content = new ArrayList<String>();
 
+        boolean isPDCalled;
+
+        // sets if Post details are called
+        boolean postDetailsCalled(char called) {
+            if (called == 'y'){
+                return true;
+            }
+            return false;
+        }
+
+        // checks if postsDetails functions are called for AsyncTask
+        boolean getIsPDCalled(){
+            return isPDCalled;
+        }
+
+        // calls the execute for AsyncTask
+        private void callPostDetails(String theurl){
+            PostsHelper = new WSAdapter.SendAPIRequests();
+            // sets if post details are called
+            postDetailsCalled('y');
+            // executes AsyncTask
+            PostsHelper.execute(theurl);
+        }
+
+        // sets values for the posts arrays
         public void setPost(int p_id, String p_title, String p_content) {
             post_id.add(p_id);
             post_title.add(p_title);
             post_content.add(p_content);
         }
 
+        // Lists the posts from the database
         public void ListPosts() {
-            // add functionality if a post was deleted and was clicked
+            /////////// add functionality if a post was deleted and was clicked
             postsSect = (TextView) findViewById(R.id.PostsSection);
             postsSect.setText(post_title.get(post_title.size()) + "\n");
             for (int i = post_id.size() - 1; i > 0; i--)

@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 public class Login extends AppCompatActivity {
 
-    Button LoginButton;
+    Button LoginButton, RegButton;
     EditText uUserName, uPassWord;
     WSAdapter.SendAPIRequests AuthHelper;
 
@@ -26,6 +26,7 @@ public class Login extends AppCompatActivity {
         //SetupHomeBtn = (ImageButton) findViewById(R.id.SetupHomeBtn);
 
         LoginButton = (Button) findViewById(R.id.LoginButton);
+        RegButton = (Button) findViewById(R.id.LoginRegister);
 
         uUserName = (EditText) findViewById(R.id.LoginUserBox);
         uPassWord = (EditText) findViewById(R.id.LoginPassBox);
@@ -47,6 +48,14 @@ public class Login extends AppCompatActivity {
                 if (APIAuthentication(strUserName, strPassWord, APIUrl)){
                     startActivity(new Intent(Login.this, Posts.class));
                 }
+            }
+        });
+
+        RegButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // gets the username and password from the EditText
+                startActivity(new Intent(Login.this, Register.class));
             }
         });
 

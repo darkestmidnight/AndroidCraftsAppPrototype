@@ -27,7 +27,7 @@ public class WSAdapter extends AppCompatActivity {
 
     }
 
-    static public class SendAPIRequests extends AsyncTask<String, Void, String> {
+    static public class SendAPIRequests extends AsyncTask<String, String, String> {
 
         // Add a pre-execute thing
 
@@ -97,14 +97,15 @@ public class WSAdapter extends AppCompatActivity {
 
             // For posts
             try {
-                JSONObject pJObj = new JSONObject(result);
-                JSONArray pJObjArray = pJObj.getJSONArray("posts");
+                if (postsHelper.getIsPDCalled()){
+                    JSONObject pJObj = new JSONObject(result);
+                    JSONArray pJObjArray = pJObj.getJSONArray("posts");
 
-                for (int i = 0; i < pJObjArray.length(); i++) {
-                    JSONObject pJObj_data = pJObjArray.getJSONObject(i);
-                    postsHelper.setPost(pJObj_data.getInt("id"), "post_title", "post_content");
+                    for (int i = 0; i < pJObjArray.length(); i++) {
+                        JSONObject pJObj_data = pJObjArray.getJSONObject(i);
+                        postsHelper.setPost(pJObj_data.getInt("id"), "post_title", "post_content");
+                    }
                 }
-
 
             } catch (JSONException e) {
                 //Toast.makeText(JSonActivity.this, e.toString(), Toast.LENGTH_LONG).show();
@@ -112,6 +113,4 @@ public class WSAdapter extends AppCompatActivity {
             }
         }
     }
-
-
 }
