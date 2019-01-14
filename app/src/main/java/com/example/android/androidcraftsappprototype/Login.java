@@ -45,8 +45,10 @@ public class Login extends AppCompatActivity {
                 String strUserName = uUserName.getText().toString();
                 String strPassWord = uPassWord.getText().toString();
 
+                //startActivity(new Intent(Login.this, Posts.class));
+
                 // To authorize oauth for requesting access token
-                OAuthClientRequest request = null;
+                /*OAuthClientRequest request = null;
 
                 try {
                     // sends authorization request with credentials to the server
@@ -61,15 +63,15 @@ public class Login extends AppCompatActivity {
                 // authentication service requires &reponse_type=code
                 Intent intent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse(request.getLocationUri() + "&response_type=code"));
-                startActivity(intent);
+                startActivity(intent);*/
 
                 // API url duh
                 String APIUrl = "http://192.168.0.18:8000/token-auth/";
 
                 // If the user is authenticated, then transfer to the MainActivity page
-                /*if (APIAuthentication(strUserName, strPassWord, APIUrl)){
+                if (APIAuthentication(strUserName, strPassWord, APIUrl)){
                     startActivity(new Intent(Login.this, Posts.class));
-                }*/
+                }
             }
         });
 

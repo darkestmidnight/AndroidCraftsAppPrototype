@@ -8,34 +8,48 @@
 
     <TextView
         android:id="@+id/PostsSection"
-        android:layout_width="262dp"
-        android:layout_height="310dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginLeft="61dp"
+        android:layout_marginRight="61dp"
+        android:layout_marginStart="61dp"
         android:fontFamily="serif-monospace"
         android:textSize="30dp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="61dp"
-        tools:layout_editor_absoluteY="85dp" />
+        app:layout_constraintBottom_toTopOf="@+id/PostsDoneButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PostsPageTitle" />
 
     <TextView
         android:id="@+id/PostsPageTitle"
         android:layout_width="148dp"
-        android:layout_height="51dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="serif-monospace"
-        android:textSize="30dp"
-        android:textAlignment="center"
-        android:textStyle="bold"
         android:text="Posts"
-        tools:layout_editor_absoluteX="118dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/PostsSection"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/PostsDoneButton"
         android:layout_width="141dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="34dp"
         android:fontFamily="serif-monospace"
         android:text="Done"
         android:textAlignment="center"
         android:textSize="30dp"
-        tools:layout_editor_absoluteX="122dp"
-        tools:layout_editor_absoluteY="419dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PostsSection" />
 </android.support.constraint.ConstraintLayout>

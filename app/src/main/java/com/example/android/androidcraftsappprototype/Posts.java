@@ -17,14 +17,14 @@ public class Posts extends AppCompatActivity {
 
     TextView postsSect;
     Button postsDoneBtn;
-    WSAdapter.SendAPIRequests PostsHelper;
+    WSAdapter.SendPostsRequest PostsHelper;
     StringBuilder postsBuffer = new StringBuilder();
 
     @Override
     protected void onResume(){
         super.onResume();
         PostsDetails postDetailsHelper = new PostsDetails();
-        postDetailsHelper.ListPosts();
+        //postDetailsHelper.ListPosts();
     }
 
     @Override
@@ -35,10 +35,10 @@ public class Posts extends AppCompatActivity {
         PostsDetails postDetailsHelper = new PostsDetails();
 
         postsDoneBtn = (Button) findViewById(R.id.PostsDoneButton);
+        //postsSect = (TextView) findViewById(R.id.PostsSection);
 
-        postDetailsHelper.callPostDetails("192.168.0.18:8000/api");
-        postDetailsHelper.ListPosts();
-        postDetailsHelper.postDetailsCalled('n');
+        postDetailsHelper.callPostDetails("http://192.168.0.18:8000/api/");
+        //postDetailsHelper.ListPosts();
 
         postsDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,12 +58,6 @@ public class Posts extends AppCompatActivity {
         boolean isPDCalled;
 
         // sets if Post details are called
-        boolean postDetailsCalled(char called) {
-            if (called == 'y'){
-                return true;
-            }
-            return false;
-        }
 
         // checks if postsDetails functions are called for AsyncTask
         boolean getIsPDCalled(){
@@ -72,28 +66,46 @@ public class Posts extends AppCompatActivity {
 
         // calls the execute for AsyncTask
         private void callPostDetails(String theurl){
-            PostsHelper = new WSAdapter.SendAPIRequests();
-            // sets if post details are called
-            postDetailsCalled('y');
+            PostsHelper = new WSAdapter().new SendPostsRequest();
             // executes AsyncTask
             PostsHelper.execute(theurl);
         }
 
         // sets values for the posts arrays
         public void setPost(int p_id, String p_title, String p_content) {
-            post_id.add(p_id);
-            post_title.add(p_title);
-            post_content.add(p_content);
+            this.post_id.add(p_id);
+            this.post_title.add(p_title);
+            this.post_content.add(p_content);
+        }
+
+        public ArrayList<Integer> getPostID() {
+            return this.post_id;
+        }
+
+        public ArrayList<String> getPostTitle() {
+            return this.post_title;
+        }
+
+        public ArrayList<String> getPostContent() {
+            return this.post_content;
         }
 
         // Lists the posts from the database
         public void ListPosts() {
             /////////// add functionality if a post was deleted and was clicked
+            int lastFrJSONArray = getPostID().size() - 1;
+
             postsSect = (TextView) findViewById(R.id.PostsSection);
-            postsSect.setText(post_title.get(post_title.size()) + "\n");
-            for (int i = post_id.size() - 1; i > 0; i--)
+
+            postsSect.setText("id: " + getPostID().get(0) + "\n");
+            for (int i = lastFrJSONArray; i >= 0; i--)
             {
-                postsSect.append(post_title.get(i));
+                postsSect.append("title: " + getPostTitle().get(i) + "\n");
+                postsSect.append("content: " + getPostContent().get(i) + "\n");
+
+                if (i != 0) {
+                    postsSect.append("id: " + getPostID().get(i) + "\n");
+                }
             }
         }
     }
