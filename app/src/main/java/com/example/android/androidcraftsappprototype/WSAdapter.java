@@ -1,11 +1,13 @@
 package com.example.android.androidcraftsappprototype;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.AsyncTask;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.DataOutputStream;
@@ -96,33 +98,18 @@ public class WSAdapter extends AppCompatActivity {
             super.onPostExecute(result);
             // expecting a response code fro my server upon receiving the POST data
             Log.e("TAG", result);
-
-            /*Posts.PostsDetails postsHelper = new Posts().new PostsDetails();
-
-            // For posts
-            try {
-                if (postsHelper.getIsPDCalled()){
-                    JSONObject pJObj = new JSONObject(result);
-                    JSONArray pJObjArray = pJObj.getJSONArray("posts");
-
-                    for (int i = 0; i < pJObjArray.length(); i++) {
-                        JSONObject pJObj_data = pJObjArray.getJSONObject(i);
-                        postsHelper.setPost(pJObj_data.getInt("id"), "post_title", "post_content");
-                    }
-                }
-
-            } catch (JSONException e) {
-                //Toast.makeText(JSonActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-                Log.d("Json","Exception = "+e.toString());
-            }*/
         }
     }
 
     public class SendPostsRequest extends AsyncTask<String, String, String> {
         TextView postsSect;
-
         // Add a pre-execute thing
         HttpURLConnection urlConnection;
+        private WeakReference<Activity> mPostReference;
+
+        /*public SendPostsRequest(Activity activity){
+            mPostReference = new WeakReference<Activity>(activity);
+        }*/
 
         @Override
         protected String doInBackground(String... params) {
@@ -163,8 +150,6 @@ public class WSAdapter extends AppCompatActivity {
 
             // For posts
             try {
-                /*JSONObject pJObj = new JSONObject(result);
-                JSONArray pJObjArray = pJObj.getJSONArray(result);*/
                 JSONArray pJObjArray = new JSONArray(result);
 
                 // algorithm for parsing the JSONArray from the Django REST API
@@ -180,7 +165,47 @@ public class WSAdapter extends AppCompatActivity {
                 Log.d("Json","Exception = "+e.toString());
             }
 
+            /*Posts helperU = new Posts();
+
+            //helperU.postsSect = (TextView) findViewById(R.id.PostsSection);
+            int lastFrJSONArray = postsHelper.getPostID().size() - 1;
+
+            // outputs the id of the very first post, something to put to the textview
+            helperU.postsSect.setText("id: " + postsHelper.getPostID().get(0) + "\n");
+            for (int i = lastFrJSONArray; i >= 0; i--)
+            {
+                // appending the titles and contents of the current post
+                helperU.postsSect.append("title: " + postsHelper.getPostTitle().get(i) + "\n");
+                helperU.postsSect.append("content: " + postsHelper.getPostContent().get(i) + "\n");
+
+                // if this is the last post, then don't need to append id for the next post.
+                if (i != 0) {
+                    helperU.postsSect.append("id: " + postsHelper.getPostID().get(i) + "\n");
+                }
+            }*/
+            postsSect = (TextView) findViewById(R.id.PostsSection);
             postsHelper.ListPosts();
+
+            /*Activity activityRef = mPostReference.get();
+            if (activityRef != null) {
+                int lastFrJSONArray = postsHelper.getPostID().size() - 1;
+
+                postsSect = (TextView) findViewById(R.id.PostsSection);
+
+                // outputs the id of the very first post, something to put to the textview
+                postsSect.setText("id: " + postsHelper.getPostID().get(0) + "\n");
+                for (int i = lastFrJSONArray; i >= 0; i--)
+                {
+                    // appending the titles and contents of the current post
+                    postsSect.append("title: " + postsHelper.getPostTitle().get(i) + "\n");
+                    postsSect.append("content: " + postsHelper.getPostContent().get(i) + "\n");
+
+                    // if this is the last post, then don't need to append id for the next post.
+                    if (i != 0) {
+                        postsSect.append("id: " + postsHelper.getPostID().get(i) + "\n");
+                    }
+                }
+            }*/
         }
 
         /*protected void onProgressUpdate(String... string) {

@@ -1,5 +1,6 @@
 package com.example.android.androidcraftsappprototype;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,10 +33,10 @@ public class Posts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posts);
 
-        PostsDetails postDetailsHelper = new PostsDetails();
-
         postsDoneBtn = (Button) findViewById(R.id.PostsDoneButton);
-        //postsSect = (TextView) findViewById(R.id.PostsSection);
+        postsSect = (TextView) findViewById(R.id.PostsSection);
+
+        PostsDetails postDetailsHelper = new PostsDetails();
 
         postDetailsHelper.callPostDetails("http://192.168.0.18:8000/api/");
         //postDetailsHelper.ListPosts();
@@ -56,6 +57,8 @@ public class Posts extends AppCompatActivity {
         ArrayList<String> post_content = new ArrayList<String>();
 
         boolean isPDCalled;
+
+
 
         // sets if Post details are called
 
@@ -93,16 +96,18 @@ public class Posts extends AppCompatActivity {
         // Lists the posts from the database
         public void ListPosts() {
             /////////// add functionality if a post was deleted and was clicked
+
             int lastFrJSONArray = getPostID().size() - 1;
 
-            postsSect = (TextView) findViewById(R.id.PostsSection);
-
+            // outputs the id of the very first post, something to put to the textview
             postsSect.setText("id: " + getPostID().get(0) + "\n");
             for (int i = lastFrJSONArray; i >= 0; i--)
             {
+                // appending the titles and contents of the current post
                 postsSect.append("title: " + getPostTitle().get(i) + "\n");
                 postsSect.append("content: " + getPostContent().get(i) + "\n");
 
+                // if this is the last post, then don't need to append id for the next post.
                 if (i != 0) {
                     postsSect.append("id: " + getPostID().get(i) + "\n");
                 }
