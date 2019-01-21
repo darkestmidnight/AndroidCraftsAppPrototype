@@ -38,7 +38,10 @@ public class Posts extends AppCompatActivity {
 
         PostsDetails postDetailsHelper = new PostsDetails();
 
-        postDetailsHelper.callPostDetails("http://192.168.0.18:8000/api/");
+        PostsHelper = new WSAdapter().new SendPostsRequest(this, this);
+        PostsHelper.execute("http://192.168.0.18:8000/api/");
+
+        //postDetailsHelper.callPostDetails("http://192.168.0.18:8000/api/");
         //postDetailsHelper.ListPosts();
 
         postsDoneBtn.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +72,7 @@ public class Posts extends AppCompatActivity {
 
         // calls the execute for AsyncTask
         private void callPostDetails(String theurl){
-            PostsHelper = new WSAdapter().new SendPostsRequest();
+            //PostsHelper = new WSAdapter().new SendPostsRequest(this);
             // executes AsyncTask
             PostsHelper.execute(theurl);
         }
@@ -96,6 +99,7 @@ public class Posts extends AppCompatActivity {
         // Lists the posts from the database
         public void ListPosts() {
             /////////// add functionality if a post was deleted and was clicked
+            postsSect = (TextView) findViewById(R.id.PostsSection);
 
             int lastFrJSONArray = getPostID().size() - 1;
 

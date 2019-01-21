@@ -1,6 +1,7 @@
 package com.example.android.androidcraftsappprototype;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.AsyncTask;
@@ -25,13 +26,13 @@ import android.widget.TextView;
 
 // I forgot what WS stands for, but this class serves as an adapter for JSON and Online stuff
 // I think it stands for With-Server Adapter
-public class WSAdapter extends AppCompatActivity {
+public class WSAdapter {
 
-    @Override
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-    }
+    }*/
 
     static public class SendAPIRequests extends AsyncTask<String, String, String> {
 
@@ -105,11 +106,17 @@ public class WSAdapter extends AppCompatActivity {
         TextView postsSect;
         // Add a pre-execute thing
         HttpURLConnection urlConnection;
-        private WeakReference<Activity> mPostReference;
 
-        /*public SendPostsRequest(Activity activity){
-            mPostReference = new WeakReference<Activity>(activity);
-        }*/
+        // gets the activity context
+        private WeakReference<Context> mPostReference;
+        // to be able to access activity resources
+        Activity activity;
+
+        // constructor
+        public SendPostsRequest(Context context, Activity activity){
+            mPostReference = new WeakReference<>(context);
+            this.activity = activity;
+        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -146,7 +153,10 @@ public class WSAdapter extends AppCompatActivity {
             // expecting a response code fro my server upon receiving the POST data
             Log.e("TAG", result);
 
+            // gets the JSON files stored in the posts details class from Posts Activity
             Posts.PostsDetails postsHelper = new Posts().new PostsDetails();
+            // retrieves the context passed
+            Context context = mPostReference.get();
 
             // For posts
             try {
@@ -165,35 +175,14 @@ public class WSAdapter extends AppCompatActivity {
                 Log.d("Json","Exception = "+e.toString());
             }
 
-            /*Posts helperU = new Posts();
+            // checks if context is not null before updating posts page
+            if (context != null){
+                postsSect = (TextView) activity.findViewById(R.id.PostsSection);
 
-            //helperU.postsSect = (TextView) findViewById(R.id.PostsSection);
-            int lastFrJSONArray = postsHelper.getPostID().size() - 1;
-
-            // outputs the id of the very first post, something to put to the textview
-            helperU.postsSect.setText("id: " + postsHelper.getPostID().get(0) + "\n");
-            for (int i = lastFrJSONArray; i >= 0; i--)
-            {
-                // appending the titles and contents of the current post
-                helperU.postsSect.append("title: " + postsHelper.getPostTitle().get(i) + "\n");
-                helperU.postsSect.append("content: " + postsHelper.getPostContent().get(i) + "\n");
-
-                // if this is the last post, then don't need to append id for the next post.
-                if (i != 0) {
-                    helperU.postsSect.append("id: " + postsHelper.getPostID().get(i) + "\n");
-                }
-            }*/
-            postsSect = (TextView) findViewById(R.id.PostsSection);
-            postsHelper.ListPosts();
-
-            /*Activity activityRef = mPostReference.get();
-            if (activityRef != null) {
                 int lastFrJSONArray = postsHelper.getPostID().size() - 1;
 
-                postsSect = (TextView) findViewById(R.id.PostsSection);
-
                 // outputs the id of the very first post, something to put to the textview
-                postsSect.setText("id: " + postsHelper.getPostID().get(0) + "\n");
+                postsSect.setText("id: " + postsHelper.getPostID().get(lastFrJSONArray - 1) + "\n");
                 for (int i = lastFrJSONArray; i >= 0; i--)
                 {
                     // appending the titles and contents of the current post
@@ -205,14 +194,9 @@ public class WSAdapter extends AppCompatActivity {
                         postsSect.append("id: " + postsHelper.getPostID().get(i) + "\n");
                     }
                 }
-            }*/
+            }
+
         }
-
-        /*protected void onProgressUpdate(String... string) {
-
-            .settext(string[0]); // and here you set the text
-
-        }*/
 
     }
 }
