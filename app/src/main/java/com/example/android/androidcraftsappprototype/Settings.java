@@ -16,9 +16,12 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
     ImageButton AbstractBtn1, AbstractBtn2, AbstractBtn3;
     SharedPreferences ShPreference;
     SharedPreferences.Editor PrefEditor;
+    // preferences category
     static String MyPREFERENCES = "MyPrefs";
+    // more specific sharedpreferences category
     String BackgroundChoice = "BckgrndChoice";
     ConstraintLayout CurrentLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

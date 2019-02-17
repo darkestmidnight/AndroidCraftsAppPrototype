@@ -65,7 +65,8 @@ public class Register extends AppCompatActivity {
                     startActivity(new Intent(Login.this, Posts.class));
                 }*/
 
-                StringBuilder almostID = new StringBuilder();
+                /////////////// FIREBASE
+                /*StringBuilder almostID = new StringBuilder();
                 almostID.append(strFirstN + " " + strLastN);
                 String theID = almostID.toString();
 
@@ -102,7 +103,7 @@ public class Register extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 Log.w("TAG", "Error writing document", e);
                             }
-                        });
+                        });*/
             }
         });
 

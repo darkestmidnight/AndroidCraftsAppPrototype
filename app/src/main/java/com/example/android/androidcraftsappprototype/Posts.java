@@ -39,7 +39,7 @@ public class Posts extends AppCompatActivity {
         PostsDetails postDetailsHelper = new PostsDetails();
 
         PostsHelper = new WSAdapter().new SendPostsRequest(this, this);
-        PostsHelper.execute("http://192.168.0.18:8000/api/");
+        PostsHelper.execute("http://192.168.0.18:8000/api/profile/");
 
         //postDetailsHelper.callPostDetails("http://192.168.0.18:8000/api/");
         //postDetailsHelper.ListPosts();

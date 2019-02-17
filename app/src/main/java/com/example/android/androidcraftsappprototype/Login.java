@@ -45,28 +45,8 @@ public class Login extends AppCompatActivity {
                 String strUserName = uUserName.getText().toString();
                 String strPassWord = uPassWord.getText().toString();
 
-                //startActivity(new Intent(Login.this, Posts.class));
-
-                // To authorize oauth for requesting access token
-                /*OAuthClientRequest request = null;
-
-                try {
-                    // sends authorization request with credentials to the server
-                    request = OAuthClientRequest
-                            .authorizationLocation("http://192.168.0.18:8000/auth/authorize")
-                            .setClientId("mNUNXI4MinYyVvsRi1VPiv7ltrZWBOzr3OfnHJa1").setRedirectURI("http://oauthresponse")
-                            .buildQueryMessage();
-                } catch (OAuthSystemException e) {
-                    Log.d("TAG", "OAuth request failed", e);
-                }
-
-                // authentication service requires &reponse_type=code
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse(request.getLocationUri() + "&response_type=code"));
-                startActivity(intent);*/
-
                 // API url duh
-                String APIUrl = "http://192.168.0.18:8000/token-auth/";
+                String APIUrl = "http://192.168.0.18:8000/auth/token/";
 
                 // If the user is authenticated, then transfer to the MainActivity page
                 if (APIAuthentication(strUserName, strPassWord, APIUrl)){
@@ -86,23 +66,9 @@ public class Login extends AppCompatActivity {
 
     }
 
-    // to handle authorization for the redirect_url
-    @Override
-    protected void onNewIntent(Intent intent)
-    {
-        super.onNewIntent(intent);
-        Uri uri = intent.getData();
-
-        if (uri != null && uri.toString()
-                .startsWith("http://oauthresponse"))
-        {
-            String code = uri.getQueryParameter("code");
-        }
-    }
-
     private boolean APIAuthentication(String un, String pw, String url){
         // when it wasn't static -> AuthHelper = new WSAdapter().new SendAPIRequests();
-        AuthHelper = new WSAdapter.SendAPIRequests();
+        AuthHelper = new WSAdapter.SendAPIRequests(this);
 
         JSONObject postData = new JSONObject();
         try {
@@ -111,7 +77,7 @@ public class Login extends AppCompatActivity {
             postData.put("password", pw);
 
             // Putting the data to be posted in the Django API
-            //AuthHelper.execute(url, postData.toString());
+            AuthHelper.execute(un, pw, url);
 
             return true;
         } catch (JSONException e) {
