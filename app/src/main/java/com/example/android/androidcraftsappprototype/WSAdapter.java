@@ -128,14 +128,17 @@ public class WSAdapter {
 
             // to save the Access Token from the API
             try {
-                JSONArray pJObjArray = new JSONArray(result);
+                JSONObject pJObject = new JSONObject(result);
+
+                PrefEditor.putString(accessToken, pJObject.getString("access_token"));
+                PrefEditor.apply();
                 // algorithm for parsing the JSONArray from the Django REST API
-                for (int i = 0; i < pJObjArray.length(); i++) {
+                /*for (int i = 0; i < pJObjArray.length(); i++) {
                     // puts the current iterated JSON object from the array to another temporary object
                     JSONObject pJObj_data = pJObjArray.getJSONObject(i);
                     PrefEditor.putString(accessToken, pJObj_data.getString("access_token"));
                     PrefEditor.apply();
-                }
+                }*/
 
             } catch (JSONException e) {
                 //Toast.makeText(JSonActivity.this, e.toString(), Toast.LENGTH_LONG).show();
