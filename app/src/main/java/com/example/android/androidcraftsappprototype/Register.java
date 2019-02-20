@@ -15,6 +15,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,8 +26,8 @@ import java.util.Map;
 public class Register extends AppCompatActivity {
 
     Button regSbmtBtn;
-    EditText regFirstN, regLastN, regUserN, regPass, regStreet, regCity, regState, regZip;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    EditText regFirstN, regLastN, regUserN, regPass, regEmail;
+    WSAdapter.SendRegisterRequests RegisterHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +40,7 @@ public class Register extends AppCompatActivity {
         regLastN = (EditText) findViewById(R.id.RegLastName);
         regUserN = (EditText) findViewById(R.id.RegUsername);
         regPass = (EditText) findViewById(R.id.RegPassword);
-        regStreet = (EditText) findViewById(R.id.RegStreet);
-        regCity = (EditText) findViewById(R.id.RegCity);
-        regState = (EditText) findViewById(R.id.RegState);
-        regZip = (EditText) findViewById(R.id.RegZipCode);
+        regEmail = (EditText) findViewById(R.id.RegEmail);
 
         regSbmtBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,62 +51,25 @@ public class Register extends AppCompatActivity {
                 String strLastN = regLastN.getText().toString();
                 String strUserN = regUserN.getText().toString();
                 String strPass = regPass.getText().toString();
-                String strStreet = regStreet.getText().toString();
-                String strCity = regCity.getText().toString();
-                String strState = regState.getText().toString();
-                String strZip = regZip.getText().toString();
+                String strEmail = regEmail.getText().toString();
 
 
                 // API url duh
-                //String APIUrl = "http://192.168.0.18:8000/token-auth/";
+                String APIUrl = "http://192.168.0.18:8000/api/register/";
 
-                // If the user is authenticated, then transfer to the MainActivity page
-                /*if (APIAuthentication(strUserName, strPassWord, APIUrl)){
-                    startActivity(new Intent(Login.this, Posts.class));
-                }*/
+                // registers the account
+                RegisterAccount(strUserN, strPass, strEmail, strFirstN, strLastN, APIUrl);
 
-                /////////////// FIREBASE
-                /*StringBuilder almostID = new StringBuilder();
-                almostID.append(strFirstN + " " + strLastN);
-                String theID = almostID.toString();
-
-                Map<String, Object> docData = new HashMap<>();
-
-                Map<String, Object> nameData = new HashMap<>();
-                nameData.put("firstname", strFirstN);
-                nameData.put("lastname", strLastN);
-
-                Map<String, Object> credData = new HashMap<>();
-                credData.put("username", strUserN);
-                credData.put("password", strPass);
-
-                Map<String, Object> addressData = new HashMap<>();
-                addressData.put("street", strStreet);
-                addressData.put("city", strCity);
-                addressData.put("state", strState);
-                addressData.put("zipCode", strZip);
-
-                docData.put("name", nameData);
-                docData.put("credentials", credData);
-                docData.put("address", addressData);
-
-                db.collection("Users").document(theID)
-                        .set(docData)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d("TAG", "DocumentSnapshot successfully written!");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("TAG", "Error writing document", e);
-                            }
-                        });*/
+                startActivity(new Intent(Register.this, Login.class));
             }
         });
 
 
+    }
+
+    private void RegisterAccount(String un, String pw, String email, String fn, String ln, String url){
+        // when it wasn't static -> AuthHelper = new WSAdapter().new SendAPIRequests();
+        RegisterHelper = new WSAdapter().new SendRegisterRequests();
+        RegisterHelper.execute(un, pw, email, fn, ln, url);
     }
 }

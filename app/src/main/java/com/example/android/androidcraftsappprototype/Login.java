@@ -78,6 +78,7 @@ public class Login extends AppCompatActivity {
 
             // Putting the data to be posted in the Django API
             AuthHelper.execute(un, pw, url);
+            ///////// Must make a setup where AuthHelper should return true to forward
 
             return true;
         } catch (JSONException e) {

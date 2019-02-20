@@ -90,7 +90,7 @@ public class WSAdapter {
                 wr.flush();
                 wr.close();
 
-                // // Representing the input stream
+                // // Representing the input stream to URL response
                 InputStream in = new BufferedInputStream(httpURLConnection.getInputStream());
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -131,11 +131,86 @@ public class WSAdapter {
             try {
                 JSONObject pJObject = new JSONObject(result);
                 PrefEditor.putString(accessToken, pJObject.getString("access_token"));
-                PrefEditor.apply();
+                PrefEditor.commit();
 
             } catch (JSONException e) {
                 Log.d("Json","Exception = "+e.toString());
             }
+        }
+    }
+
+    public class SendRegisterRequests extends AsyncTask<String, Void, Boolean> {
+        // Add a pre-execute thing
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        private WeakReference<Context> mRegisterReference;
+
+        // constructor
+        /*public SendRegisterRequests(Context context){
+            mRegisterReference = new WeakReference<>(context);
+        }*/
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+
+            Log.e("TAG", params[0]);
+            Log.e("TAG", params[1]);
+            //String data = "";
+
+            //StringBuilder result = new StringBuilder();
+
+            HttpURLConnection httpURLConnection = null;
+            try {
+
+                // Sets up connection to the URL (params[0] from .execute in "login")
+                httpURLConnection = (HttpURLConnection) new URL(params[5]).openConnection();
+
+                // Sets the request method for the URL
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                httpURLConnection.setRequestProperty("Accept","application/json");
+
+                // Tells the URL that I am sending a POST request body
+                httpURLConnection.setDoOutput(true);
+
+                // JSON object for the REST API
+                JSONObject jsonParam = new JSONObject();
+                jsonParam.put("username", params[0]);
+                jsonParam.put("password", params[1]);
+                jsonParam.put("email", params[2]);
+                jsonParam.put("first_name", params[3]);
+                jsonParam.put("last_name", params[4]);
+
+                Log.i("JSON", jsonParam.toString());
+
+                // To write primitive Java data types to an output stream in a portable way
+                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
+                // Writes out a byte to the underlying output stream of the data posted from .execute function
+                wr.writeBytes(jsonParam.toString());
+                // Flushes the jsonParam to the output stream
+                wr.flush();
+                wr.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                // Disconnects socket after using
+                if (httpURLConnection != null) {
+                    httpURLConnection.disconnect();
+                }
+            }
+
+            //Log.e("TAG", result.toString());
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
         }
     }
 
@@ -233,7 +308,7 @@ public class WSAdapter {
                 postsSect = (TextView) activity.findViewById(R.id.PostsSection);
                 StringBuilder postsString = new StringBuilder();
 
-                for (int i = 0; i < postsToShow.size(); i++) {
+                for (int i = postsToShow.size() - 1; i >= 0; i--) {
                     postsString.append(postsToShow.get(i).getPostId() + "\n");
                     postsString.append(postsToShow.get(i).getPostTitle() + "\n");
                     postsString.append(postsToShow.get(i).getPostContent() + "\n");
