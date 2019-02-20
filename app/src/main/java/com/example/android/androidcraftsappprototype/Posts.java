@@ -8,11 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 
 public class Posts extends AppCompatActivity {
 

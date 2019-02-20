@@ -144,7 +144,6 @@ public class WSAdapter {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
         }
 
         private WeakReference<Context> mRegisterReference;
@@ -162,7 +161,7 @@ public class WSAdapter {
             Log.e("TAG", params[1]);
             //String data = "";
 
-            //StringBuilder result = new StringBuilder();
+            StringBuilder result = new StringBuilder();
 
             HttpURLConnection httpURLConnection = null;
             try {
@@ -195,6 +194,17 @@ public class WSAdapter {
                 // Flushes the jsonParam to the output stream
                 wr.flush();
                 wr.close();
+
+                // Needed to accept the input stream from URL response
+                InputStream in = new BufferedInputStream(httpURLConnection.getInputStream());
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+                // reading the input stream / response from the url
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -204,13 +214,13 @@ public class WSAdapter {
                 }
             }
 
-            //Log.e("TAG", result.toString());
+            Log.e("TAG", result.toString());
             return false;
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
-
+            super.onPostExecute(result);
         }
     }
 

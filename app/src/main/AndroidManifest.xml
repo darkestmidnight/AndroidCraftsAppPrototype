@@ -23,15 +23,18 @@
         <activity android:name=".DBAdapter" />
         <activity android:name=".Settings" />
         <activity android:name=".OnlineOffline" />
-        <activity android:name=".Login" >
+        <activity android:name=".Login">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="http" android:host="oauthresponse"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="oauthresponse"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
-
         <activity android:name=".WSAdapter" />
         <activity android:name=".Posts" />
 
@@ -41,7 +44,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Register"></activity>
+        <activity android:name=".Register" />
+        <activity android:name=".Home"></activity>
     </application>
 
 </manifest>
