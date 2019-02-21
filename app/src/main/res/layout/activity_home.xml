@@ -4,6 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home">
+    tools:context=".Home"
+    tools:layout_editor_absoluteY="81dp">
 
+    <EditText
+        android:id="@+id/postTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="51dp"
+        android:layout_marginBottom="314dp"
+        android:layout_marginTop="48dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintBottom_toTopOf="@+id/cpProfileBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/postContent"
+        android:layout_width="wrap_content"
+        android:layout_height="238dp"
+        android:layout_marginBottom="28dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/cpSubmitBtn"
+        app:layout_constraintStart_toStartOf="@+id/postTitle"
+        app:layout_constraintTop_toBottomOf="@+id/postTitle" />
+
+    <Button
+        android:id="@+id/cpSubmitBtn"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="44dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginLeft="53dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginStart="53dp"
+        android:text="Post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cpProfileBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postContent" />
+
+    <Button
+        android:id="@+id/cpProfileBtn"
+        android:layout_width="0dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="45dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginRight="61dp"
+        android:text="Profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cpSubmitBtn"
+        app:layout_constraintTop_toBottomOf="@+id/postTitle" />
 </android.support.constraint.ConstraintLayout>

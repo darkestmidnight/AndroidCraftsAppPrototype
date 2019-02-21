@@ -23,7 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.widget.TextView;
+import android.widget.EditText;
 
 import static com.example.android.androidcraftsappprototype.WSAdapter.SendAPIRequests.MyPREFERENCES;
 
@@ -225,7 +225,7 @@ public class WSAdapter {
     }
 
     public class SendPostsRequest extends AsyncTask<String, String, String> {
-        TextView postsSect;
+        EditText postsSect;
         // Add a pre-execute thing
         HttpURLConnection urlConnection;
 
@@ -234,6 +234,7 @@ public class WSAdapter {
         // to be able to access activity resources
         Activity activity;
 
+        // prepares process of SharedPreferences access token
         SharedPreferences ShPreference;
         SharedPreferences.Editor PrefEditor;
         String accessToken = "Access Token";
@@ -251,9 +252,8 @@ public class WSAdapter {
 
             // retrieves the context passed
             Context context = mPostReference.get();
-
+            // gets the AccessToken
             ShPreference = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-
             String APIAuthentication = "Bearer " + ShPreference.getString(accessToken, "");
 
             try {
@@ -315,7 +315,7 @@ public class WSAdapter {
 
             // checks if context is not null before updating posts page
             if (context != null){
-                postsSect = (TextView) activity.findViewById(R.id.PostsSection);
+                postsSect = (EditText) activity.findViewById(R.id.PostsList);
                 StringBuilder postsString = new StringBuilder();
 
                 for (int i = postsToShow.size() - 1; i >= 0; i--) {
@@ -330,6 +330,98 @@ public class WSAdapter {
             }
 
         }
+    }
 
+    public class CreatePostRequests extends AsyncTask<String, String, String> {
+        // Add a pre-execute thing
+
+        // gets the activity context
+
+        SharedPreferences ShPreference;
+        SharedPreferences.Editor PrefEditor;
+        String accessToken = "Access Token";
+
+        private WeakReference<Context> mCreatePostReference;
+
+        // constructor
+        public CreatePostRequests(Context context){
+            mCreatePostReference = new WeakReference<>(context);
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+
+            Log.e("TAG", params[0]);
+            Log.e("TAG", params[1]);
+
+            StringBuilder result = new StringBuilder();
+
+            // retrieves the context passed
+            Context context = mCreatePostReference.get();
+            // gets the AccessToken
+            ShPreference = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+            String APIAuthentication = "Bearer " + ShPreference.getString(accessToken, "");
+
+            HttpURLConnection httpURLConnection = null;
+            try {
+
+                // Sets up connection to the URL (params[2] from .execute in "Home")
+                httpURLConnection = (HttpURLConnection) new URL(params[2]).openConnection();
+
+                // Sets the request method for the URL
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                httpURLConnection.setRequestProperty ("Authorization", APIAuthentication);
+                httpURLConnection.setRequestProperty("Accept","application/json");
+
+                // Tells the URL that I am sending a POST request body
+                httpURLConnection.setDoOutput(true);
+                // Tells the URL that I want to read the response data
+                httpURLConnection.setDoInput(true);
+
+                // JSON object for the REST API
+                JSONObject jsonParam = new JSONObject();
+                jsonParam.put("post_title", params[0]);
+                jsonParam.put("post_content", params[1]);
+
+                Log.i("JSON", jsonParam.toString());
+
+                // To write primitive Java data types to an output stream in a portable way
+                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
+                // Writes out a byte to the underlying output stream of the data posted from .execute function
+                wr.writeBytes(jsonParam.toString());
+                // Flushes the jsonParam to the output stream
+                wr.flush();
+                wr.close();
+
+                // // Representing the input stream to URL response
+                InputStream in = new BufferedInputStream(httpURLConnection.getInputStream());
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+                // reading the input stream / response from the url
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                // Disconnects socket after using
+                if (httpURLConnection != null) {
+                    httpURLConnection.disconnect();
+                }
+            }
+
+            Log.e("TAG", result.toString());
+            return result.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+        }
     }
 }

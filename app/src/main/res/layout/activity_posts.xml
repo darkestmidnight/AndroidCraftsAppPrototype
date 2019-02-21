@@ -4,37 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Posts">
-
-    <TextView
-        android:id="@+id/PostsSection"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="61dp"
-        android:layout_marginLeft="61dp"
-        android:layout_marginRight="61dp"
-        android:layout_marginStart="61dp"
-        android:fontFamily="serif-monospace"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/PostsDoneButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PostsPageTitle" />
+    tools:context=".Posts"
+    tools:layout_editor_absoluteY="81dp">
 
     <TextView
         android:id="@+id/PostsPageTitle"
         android:layout_width="148dp"
-        android:layout_height="53dp"
-        android:layout_marginBottom="18dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="25dp"
         android:layout_marginTop="16dp"
         android:fontFamily="serif-monospace"
         android:text="Posts"
         android:textAlignment="center"
         android:textSize="30dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/PostsSection"
+        app:layout_constraintBottom_toTopOf="@+id/PostsList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,5 +35,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PostsSection" />
+        app:layout_constraintTop_toBottomOf="@+id/PostsList" />
+
+    <EditText
+        android:id="@+id/PostsList"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="23dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/PostsDoneButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PostsPageTitle" />
 </android.support.constraint.ConstraintLayout>

@@ -1,20 +1,18 @@
 package com.example.android.androidcraftsappprototype;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Button;
 
 
 public class Posts extends AppCompatActivity {
 
-    TextView postsSect;
+    EditText postsSect;
     Button postsDoneBtn;
     WSAdapter.SendPostsRequest PostsHelper;
-    StringBuilder postsBuffer = new StringBuilder();
 
     @Override
     protected void onResume(){
@@ -27,18 +25,15 @@ public class Posts extends AppCompatActivity {
         setContentView(R.layout.activity_posts);
 
         postsDoneBtn = (Button) findViewById(R.id.PostsDoneButton);
-        postsSect = (TextView) findViewById(R.id.PostsSection);
+        postsSect = (EditText) findViewById(R.id.PostsList);
 
         PostsHelper = new WSAdapter().new SendPostsRequest(this, this);
         PostsHelper.execute("http://192.168.0.18:8000/api/profile/");
 
-        //postDetailsHelper.callPostDetails("http://192.168.0.18:8000/api/");
-        //postDetailsHelper.ListPosts();
-
         postsDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Posts.this, MainActivity.class));
+                startActivity(new Intent(Posts.this, Home.class));
 
             }
         });
